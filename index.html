@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Подготовка к выпускному вечеру — Фоторепортаж</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ── NAV ── -->
+    <nav id="main-nav">
+      <a
+        href="https://www.sb.by/"
+        class="logo"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="assets/logo.png"
+          data-defer-src="img/logo.png"
+          alt="SB.BY"
+          class="logo-img"
+          width="40"
+          height="40"
+          decoding="async"
+        />
+        <span class="logo-text">SB.BY</span>
+      </a>
+      <ul class="nav-links">
+    <li><a href="#atmosphere">Как готовится школа?</a></li>
+    <li><a href="#portraits">Как готовятся девочки?</a></li>
+    <li><a href="#details">Важные нюансы</a></li>
+      </ul>
+      <div class="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu">
+  <a href="#atmosphere">Как готовится школа?</a>
+  <a href="#portraits">Как готовятся девочки?</a>
+  <a href="#details">Важные нюансы</a>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     1. HERO
+══════════════════════════════════════ -->
+    <section id="hero" class="section">
+      <div class="hero-bg" data-parallax="0.4"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <div class="hero-eyebrow reveal">ЖИВОЙ РЕПОРТАЖ</div>
+        <h1 class="reveal reveal-delay-1">
+          Выпускной только для<br />девочек
+          <em class="italic" style="color: var(--rose)">– так бывает?</em>
+        </h1>
+        <a href="#hero-note" class="btn reveal reveal-delay-3">
+          Смотреть репортаж
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M3 8h10M9 4l4 4-4 4"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+<section id="hero-note" class="section">
+  <div class="container">
+    <div class="hero-note-card reveal">
+      Такой праздник в этом году пройдет в гимназии № 28 имени Владимира Короткевича в Минске: во взрослую жизнь выпорхнет уникальный класс, целиком состоящий из девушек! 16 умниц и красавиц наденут красивые платья и повяжут ленты выпускника. Согласитесь, очень символично, что все происходит в Год белорусской женщины. Как готовятся красотки? Следила наш корреспондент <a href="https://www.sb.by/author/473101-taisiya-azanovich/" target="_blank" rel="noopener noreferrer">Таисия Азанович</a>.
+    </div>
+  </div>
+</section>
+
+    <!-- ══════════════════════════════════════
+     2. INTRO / EDITORIAL
+══════════════════════════════════════ -->
+    <section id="intro" class="section">
+      <div class="container">
+        <div class="intro-grid">
+          <div class="intro-text">
+            <h2 class="reveal reveal-delay-1">Как готовится школа?</h2>
+            <p class="reveal reveal-delay-2" style="margin-top: 20px">
+              Каждая суббота для 11-классниц вот уже два месяца начинается
+              нетривиально: под звуки вальса школьницы кружатся в танце с
+              курсантами МВД. Так идет подготовка к главному школьному балу —
+              оставить девушек без кавалеров педагоги не могли.
+            </p>
+            <p class="reveal reveal-delay-3">
+              Директор гимназии Алеся Зеневич не скрывает:
+            </p>
+            <div
+              class="reveal reveal-delay-4"
+              style="
+                margin-top: 32px;
+                padding: 20px 24px;
+                border-left: 2px solid var(--gold);
+                background: rgba(201, 160, 96, 0.05);
+                border-radius: 0 12px 12px 0;
+              "
+            >
+              <p
+                style="
+                  font-family: &quot;Cormorant Garamond&quot;, serif;
+                  font-style: italic;
+                  font-size: 1.2rem;
+                  color: var(--champagne);
+                  line-height: 1.6;
+                "
+              >
+                — Горжусь нынешним выпуском! Среди девушек — четыре победительницы
+                третьего этапа республиканской олимпиады и четыре претендентки на
+                золотые медали, средний балл в классе — 8,7.
+              </p>
+            </div>
+          </div>
+
+          <div class="intro-collage reveal-right">
+            <div
+              class="collage-item ci-1 photo photo-rose"
+              data-label=""
+              style="
+                background-image: url('assets/img/dance-1.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              "
+            ></div>
+            <div
+              class="collage-item ci-2 photo photo-warm"
+              data-label=""
+              style="
+                background-image: url('assets/img/dance-4.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              "
+            ></div>
+            <div
+              class="collage-item ci-3 photo photo-gold"
+              data-label=""
+              style="
+                background-image: url('assets/img/dance-2.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              "
+            ></div>
+            <div
+              class="collage-item ci-4 photo photo-violet"
+              data-label=""
+              style="
+                background-image: url('assets/img/dance-3.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              "
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     3. АТМОСФЕРА УТРА
+══════════════════════════════════════ -->
+    <section id="atmosphere" class="section diagonal-top diagonal-bottom">
+      <div class="atm-bg" data-parallax="0.25"></div>
+      <div class="atm-overlay"></div>
+
+      <div class="container" style="position: relative; z-index: 2">
+        <div class="atm-content">
+          <p class="reveal reveal-delay-2" style="margin: 20px 0 28px">
+            Выпускные в Беларуси давно ушли от концепции «ярмарки тщеславия» с
+            лимузинами и ведущими за баснословные гонорары. Акцент сместился на
+            искренность, творчество и разумную экономию. Школа берет на себя
+            техническую организацию, чтобы праздник выглядел достойно и без
+            лишних трат, рассказывает педагог-организатор Анастасия Копосова:
+          </p>
+          <div
+            class="glass-block reveal reveal-delay-3"
+            style="max-width: 400px"
+          >
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--champagne);
+                font-family: &quot;Cormorant Garamond&quot;, serif;
+                font-style: italic;
+                font-size: 1.1rem;
+                line-height: 1.7;
+              "
+              >— У нас есть профессиональная аппаратура, сценический свет,
+              микрофоны и даже собственная красная дорожка, которую расстелем в
+              зале для торжественного прохода выпускников. В качестве фотозоны —
+              баннер с цитатой Владимира Короткевича. Родители внесут только
+              организационные расходы на цветы, шары, праздничный фуршет,
+              транспортные услуги, чтобы централизованно добраться к месту
+              празднования второй части мероприятия. Сумма с человека составит
+              около 100 рублей.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="org-note" class="section">
+      <div class="container">
+        <div class="org-note-card reveal">
+          <p>
+            Гимназия не тратит средства на приглашенных фотографов и
+            видеографов. В прошлом году репортаж вел папа одной из выпускниц, в
+            этом задачу выполнят ребята из школьного медиацентра. Учащиеся 7—10-х
+            классов делают не только качественные фото, но и динамичные
+            видеоролики — сейчас среди молодежи это очень модно, отмечает
+            Анастасия Копосова:
+          </p>
+          <p class="org-note-quote">
+            — Подготовку номеров начинаем с начала учебного года, при разработке
+            сценария в том числе мониторим залетевшие ролики в TikTok, лучшие
+            идеи адаптируем под школьный формат. Вечер, где творческие номера
+            гармонично чередуются с вручением аттестатов, длится около 3,5 часа.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     4. ОБРАЗЫ ВЫПУСКНИКОВ
+══════════════════════════════════════ -->
+    <section id="portraits" class="section">
+      <div class="container">
+        <div class="portraits-header"></div>
+
+        <div class="portraits-grid">
+          <div class="portrait-card reveal">
+            <div
+              class="photo photo-rose"
+              data-label="Выпускница в вечернем платье"
+            ></div>
+            <div class="portrait-overlay">
+              <div class="portrait-name">Анна М.</div>
+              <div class="portrait-desc">«Этот день я ждала три года»</div>
+            </div>
+          </div>
+          <div class="portrait-card reveal reveal-delay-1">
+            <div
+              class="photo photo-cool"
+              data-label="Выпускник в костюме"
+            ></div>
+            <div class="portrait-overlay">
+              <div class="portrait-name">Дмитрий К.</div>
+              <div class="portrait-desc">«Наконец-то взрослый»</div>
+            </div>
+          </div>
+          <div class="portrait-card reveal reveal-delay-2">
+            <div
+              class="photo photo-violet"
+              data-label="Подруги-выпускницы"
+            ></div>
+            <div class="portrait-overlay">
+              <div class="portrait-name">Маша и Катя</div>
+              <div class="portrait-desc">«Одиннадцать лет вместе»</div>
+            </div>
+          </div>
+          <div class="portrait-card reveal reveal-delay-1">
+            <div
+              class="photo photo-gold"
+              data-label="Выпускники — лучшие друзья"
+            ></div>
+            <div class="portrait-overlay">
+              <div class="portrait-name">Лучшие друзья</div>
+              <div class="portrait-desc">«Дружба начинается в школе»</div>
+            </div>
+          </div>
+          <div class="portrait-card reveal reveal-delay-2">
+            <div
+              class="photo photo-morning"
+              data-label="Выпускница с мамой"
+            ></div>
+            <div class="portrait-overlay">
+              <div class="portrait-name">Вика и мама</div>
+              <div class="portrait-desc">«Мы обе плакали»</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     5. ДЕТАЛИ
+══════════════════════════════════════ -->
+    <section
+      id="details"
+      class="section"
+      style="
+        padding: clamp(80px, 10vw, 160px) 0;
+        background: linear-gradient(160deg, #13111e 0%, #0e0c12 100%);
+      "
+    >
+      <div class="container">
+        <div class="details-header">
+          <p class="reveal reveal-delay-1" style="color: var(--champagne)">
+            В прошлом году после торжественной части выпускники перемещались в
+            столовую. К этому событию ее полностью перевоплощали — столы
+            застилались белоснежными скатертями, а стулья покрывались нарядными
+            чехлами. Школьные повара сами колдовали над праздничным меню:
+            фаршированные грибы, канапе на шпажках, несколько видов горячего,
+            сложносочиненные салаты. А организаторы продумывали культурную
+            программу. В этот раз культурно-развлекательную часть выпускницы
+            гимназии проведут в «Чижовка-Арене» вместе с другими ребятами из
+            Заводского района. Там организуют фотозоны, фудкорт, выступление
+            приглашенных артистов.
+          </p>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item reveal">
+            <div class="photo photo-gold" data-label="Туфли выпускницы"></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-1">
+            <div
+              class="photo photo-rose"
+              data-label="Украшения и браслеты"
+            ></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-2">
+            <div class="photo photo-violet" data-label="Лента выпускницы"></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-3">
+            <div class="photo photo-warm" data-label="Букет из роз"></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-1">
+            <div
+              class="photo photo-morning"
+              data-label="Макияж крупным планом"
+            ></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-2">
+            <div
+              class="photo photo-cool"
+              data-label="Причёска выпускницы"
+            ></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-3">
+            <div class="photo photo-rose" data-label="Костюм выпускника"></div>
+          </div>
+          <div class="detail-item reveal reveal-delay-4">
+            <div
+              class="photo photo-gold"
+              data-label="Приглашение на выпускной"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     6. ЗА КУЛИСАМИ
+══════════════════════════════════════ -->
+    <section id="behind" class="section">
+      <div class="container">
+        <div class="behind-grid">
+          <div class="behind-text">
+            <h2
+              class="reveal reveal-delay-1"
+              style="color: var(--champagne); margin-bottom: 24px"
+            >
+              Как готовятся девочки?
+            </h2>
+            <p class="reveal reveal-delay-2">
+              Пожалуй, самая затратная статья расходов — создание образа,
+              особенно для девушек. С выпускницами Ириной Рудовой и Александрой
+              Карпенко обсуждаем эту волнующую тему. Девушки признаются:
+              подготовка требует вложений, хотя подходы у всех разные.
+            </p>
+
+            <div style="margin-top: 36px">
+              <div class="story-item reveal reveal-delay-2">
+                <div class="story-num">—</div>
+                <div class="story-body">
+                  <h4>Комментарий выпускницы Ирины</h4>
+                  <p>
+                    Покупка двух образов — новый тренд у выпускниц, —
+                    рассказывает Ирина. — Я приобрела два наряда: сдержанное
+                    платье — на последний звонок и блестящее в пол с разрезом —
+                    на выпускной. Оба небесно-голубого цвета. За них отдала 400
+                    рублей, туфли обошлись в 70, украшения — в 50. Считаю, что
+                    это довольно бюджетно. Макияж и прическу доверю маминой
+                    знакомой, но предварительно сделаю химическую укладку, а
+                    значит, еще минус 200 рублей.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="v-slider reveal-right">
+            <div class="v-slide">
+              <div
+                class="photo photo-rose"
+                data-label="Стилист делает причёску"
+                style="width: 100%; height: 220px; border-radius: 16px"
+              ></div>
+            </div>
+            <div class="v-slide">
+              <div
+                class="photo photo-warm"
+                data-label="Родители помогают"
+                style="width: 100%; height: 220px; border-radius: 16px"
+              ></div>
+            </div>
+            <div class="v-slide">
+              <div
+                class="photo photo-violet"
+                data-label="Друзья обнимаются"
+                style="width: 100%; height: 220px; border-radius: 16px"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     7. МОМЕНТЫ ПЕРЕД ВЫХОДОМ — CINEMATIC
+══════════════════════════════════════ -->
+    <section id="cinematic" class="section">
+      <div class="cinematic-bg" data-parallax="0.2"></div>
+      <div class="cinematic-overlay"></div>
+
+      <!-- Big decorative photo bg -->
+      <div
+        class="photo photo-morning"
+        style="position: absolute; inset: 0; opacity: 0.2"
+      ></div>
+
+      <div class="cinematic-content">
+        <div class="cinematic-line reveal"></div>
+        <h2 class="reveal reveal-delay-1">
+          Ещё несколько минут —<br />и начнётся вечер,<br />который запомнится
+          навсегда
+        </h2>
+        <div
+          class="cinematic-line reveal reveal-delay-2"
+          style="margin-top: 32px"
+        ></div>
+        <p class="reveal reveal-delay-3" style="margin-top: 24px">
+          Этот момент невозможно остановить.<br />Но его можно сохранить.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     8. БОЛЬШАЯ ГАЛЕРЕЯ
+══════════════════════════════════════ -->
+    <section id="gallery" class="section">
+      <div class="container">
+        <div class="gallery-header">
+          <h2 class="reveal reveal-delay-1" style="color: var(--champagne)">
+            Кадры репортажа
+          </h2>
+        </div>
+
+        <div class="gallery-filters reveal reveal-delay-2">
+          <button class="filter-btn active" data-filter="all">Все</button>
+          <button class="filter-btn" data-filter="portraits">Образы</button>
+          <button class="filter-btn" data-filter="details">Детали</button>
+          <button class="filter-btn" data-filter="emotions">Эмоции</button>
+          <button class="filter-btn" data-filter="behind">За кулисами</button>
+        </div>
+
+        <div class="masonry-grid reveal">
+          <div class="masonry-item" data-cat="portraits">
+            <div class="photo photo-rose" data-label="Образ выпускницы"></div>
+          </div>
+          <div class="masonry-item" data-cat="details">
+            <div class="photo photo-gold" data-label="Детали украшений"></div>
+          </div>
+          <div class="masonry-item" data-cat="emotions">
+            <div class="photo photo-warm" data-label="Радость и слёзы"></div>
+          </div>
+          <div class="masonry-item" data-cat="behind">
+            <div
+              class="photo photo-cool"
+              data-label="Подготовка за кулисами"
+            ></div>
+          </div>
+          <div class="masonry-item" data-cat="portraits">
+            <div
+              class="photo photo-violet"
+              data-label="Выпускница в образе"
+            ></div>
+          </div>
+          <div class="masonry-item" data-cat="details">
+            <div
+              class="photo photo-morning"
+              data-label="Букет крупным планом"
+            ></div>
+          </div>
+          <div class="masonry-item" data-cat="emotions">
+            <div class="photo photo-rose" data-label="Объятия подруг"></div>
+          </div>
+          <div class="masonry-item" data-cat="behind">
+            <div class="photo photo-gold" data-label="Стилист за работой"></div>
+          </div>
+          <div class="masonry-item" data-cat="portraits">
+            <div
+              class="photo photo-cool"
+              data-label="Групповое фото класса"
+            ></div>
+          </div>
+          <div class="masonry-item" data-cat="details">
+            <div class="photo photo-violet" data-label="Туфли и лента"></div>
+          </div>
+          <div class="masonry-item" data-cat="emotions">
+            <div class="photo photo-warm" data-label="Мама и дочь"></div>
+          </div>
+          <div class="masonry-item" data-cat="behind">
+            <div
+              class="photo photo-morning"
+              data-label="Последние штрихи образа"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LIGHTBOX ── -->
+    <div id="lightbox" class="lightbox">
+      <div class="lightbox-inner">
+        <button class="lightbox-close" id="lb-close" aria-label="Закрыть">
+          ✕
+        </button>
+        <button
+          class="lightbox-nav lightbox-prev"
+          id="lb-prev"
+          aria-label="Предыдущее"
+        >
+          ‹
+        </button>
+        <div
+          class="lightbox-img photo photo-rose"
+          id="lb-img"
+          data-label="Фото репортажа"
+        ></div>
+        <button
+          class="lightbox-nav lightbox-next"
+          id="lb-next"
+          aria-label="Следующее"
+        >
+          ›
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     9. ИСТОРИИ В КАДРЕ
+══════════════════════════════════════ -->
+    <section id="stories" class="section">
+      <div class="container">
+        <div class="stories-header">
+          <h2 class="reveal reveal-delay-1" style="color: var(--champagne)">
+            Три истории,<br /><em class="italic" style="color: var(--champagne)"
+              >один день</em
+            >
+          </h2>
+        </div>
+
+        <div class="stories-grid">
+          <div class="story-card reveal">
+            <div class="photo photo-morning"></div>
+            <div class="story-card-overlay">
+              <div class="story-tag">Хроника</div>
+              <h3>Последние минуты перед праздником</h3>
+              <p class="story-quote">
+                Время тянется и летит одновременно — такое бывает только в самые
+                важные дни.
+              </p>
+            </div>
+          </div>
+          <div class="story-card reveal reveal-delay-1">
+            <div class="photo photo-warm"></div>
+            <div class="story-card-overlay">
+              <div class="story-tag">Ностальгия</div>
+              <h3>Когда школа становится воспоминанием</h3>
+              <p class="story-quote">
+                Эти стены, эти коридоры — скоро они останутся только на фото и в
+                сердце.
+              </p>
+            </div>
+          </div>
+          <div class="story-card reveal reveal-delay-2">
+            <div class="photo photo-cool"></div>
+            <div class="story-card-overlay">
+              <div class="story-tag">Дружба</div>
+              <h3>Друзья, которые прошли этот путь вместе</h3>
+              <p class="story-quote">
+                Одиннадцать лет рядом. Сегодня — последний раз как школьники. Но
+                не последний раз как друзья.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     10. МИНИ-ИГРА
+══════════════════════════════════════ -->
+    <section id="minigame" class="section">
+      <div class="container">
+        <div class="game-header">
+          <div
+            class="label reveal"
+            style="
+              font-size: 0.7rem;
+              letter-spacing: 0.2em;
+              text-transform: uppercase;
+              color: var(--gold);
+              margin-bottom: 12px;
+            "
+          >
+            МИНИ-ИГРА
+          </div>
+          <h2 class="reveal reveal-delay-1" style="color: var(--champagne)">
+            Соберись<br /><em class="italic" style="color: var(--rose)"
+              >на выпускной</em
+            >
+          </h2>
+          <p class="reveal reveal-delay-2" style="margin-top: 12px">
+            Выбери свой образ — шаг за шагом
+          </p>
+        </div>
+
+        <div class="game-progress reveal" style="margin-top: 36px">
+          <div class="progress-dot current"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+          <span class="progress-label">1 / 6</span>
+        </div>
+
+        <div
+          id="game-stage"
+          class="game-stage"
+          style="transition: opacity 0.3s"
+        ></div>
+
+        <div id="game-result" class="game-result">
+          <div class="result-badge">✨ Ты готова к выпускному!</div>
+          <p style="color: var(--muted); margin-bottom: 8px">
+            Твой образ собран. Ты великолепна.
+          </p>
+          <div id="result-summary" class="result-summary"></div>
+          <button class="btn" id="g-restart" style="margin-top: 24px">
+            Собрать заново
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 7a5 5 0 1 0 1-3M2 2v3h3"
+                stroke="currentColor"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+     11. FOOTER
+══════════════════════════════════════ -->
+    <footer id="footer" class="section">
+      <div class="footer-bg" data-parallax="0.15"></div>
+      <div
+        class="photo photo-warm"
+        style="position: absolute; inset: 0; opacity: 0.15"
+      ></div>
+      <div class="footer-overlay"></div>
+
+      <div class="footer-content">
+        <p class="footer-quote reveal">
+          «Этот день начинается<br />с подготовки, но остаётся<br />в памяти
+          навсегда»
+        </p>
+        <div class="footer-links reveal reveal-delay-1">
+          <a href="#hero">Главная</a>
+          <a href="#atmosphere">Атмосфера</a>
+          <a href="#portraits">Образы</a>
+          <a href="#details">Детали</a>
+          <a href="#gallery">Галерея</a>
+          <a href="#stories">Истории</a>
+          <a href="#minigame">Мини-игра</a>
+        </div>
+        <a
+          href="#hero"
+          class="btn reveal reveal-delay-2"
+          style="margin-bottom: 40px"
+        >
+          Вернуться наверх
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M7 11V3M3 7l4-4 4 4"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+        <p class="footer-copy reveal reveal-delay-3">
+          Фоторепортаж «Подготовка к выпускному вечеру» · 2025
+        </p>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-top" aria-label="Наверх">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path
+          d="M8 12V4M4 8l4-4 4 4"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <script src="app.js"></script>
+  </body>
+</html>
