@@ -71,6 +71,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   });
 
+  /* ── SEMI-CIRCLE VERTICAL CAROUSEL ── */
+  const salonsCarousel = document.querySelector('.salons-carousel');
+  const salonsPhotos = document.querySelectorAll('.salons-carousel .salons-photo');
+  if (salonsCarousel && salonsPhotos.length) {
+    let activeIndex = 0;
+    const visibleRange = 5;
+    const stepY = 82;
+    const radiusX = 118;
+
+    function wrapDistance(i, a, n) {
+      let d = i - a;
+      const half = Math.floor(n / 2);
+      if (d > half) d -= n;
+      if (d < -half) d += n;
+      return d;
+    }
+
+    function renderSalonsCarousel() {
+      const total = salonsPhotos.length;
+      salonsPhotos.forEach((photo, i) => {
+        const d = wrapDistance(i, activeIndex, total);
+        if (Math.abs(d) > visibleRange) {
+          photo.style.opacity = '0';
+          photo.style.pointerEvents = 'none';
+          return;
+        }
+        const t = d / visibleRange;
+        const y = t * stepY * 1.35;
+        const x = -Math.cos(t * Math.PI * 0.5) * radiusX;
+        const scale = 1 - Math.min(Math.abs(t) * 0.28, 0.28);
+        const alpha = 1 - Math.min(Math.abs(t) * 0.48, 0.48);
+        photo.style.opacity = String(alpha);
+        photo.style.zIndex = String(20 - Math.abs(d));
+        photo.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+        photo.style.filter = d === 0 ? 'saturate(1.05)' : 'saturate(0.85) brightness(0.9)';
+        photo.classList.toggle('is-active', d === 0);
+        photo.style.pointerEvents = d === 0 ? 'auto' : 'none';
+      });
+    }
+
+    function moveCarousel(dir) {
+      const total = salonsPhotos.length;
+      activeIndex = (activeIndex + dir + total) % total;
+      renderSalonsCarousel();
+    }
+
+    salonsCarousel.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      moveCarousel(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    let touchStartY = 0;
+    salonsCarousel.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    salonsCarousel.addEventListener('touchmove', (e) => {
+      const delta = e.touches[0].clientY - touchStartY;
+      if (Math.abs(delta) < 24) return;
+      moveCarousel(delta < 0 ? 1 : -1);
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    renderSalonsCarousel();
+  }
+
   /* ── GALLERY FILTERS ── */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const masonryItems = document.querySelectorAll('.masonry-item');
