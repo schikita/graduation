@@ -40,6 +40,7 @@
 
     <!-- Mobile menu -->
     <div class="mobile-menu">
+      <img src="assets/splash.png" alt="" class="mobile-menu-splash" aria-hidden="true" />
       <a href="#atmosphere">Как готовится школа?</a>
       <a href="#portraits">Как готовятся девочки?</a>
       <a href="#details">Важные нюансы</a>
@@ -54,9 +55,9 @@
 
       <div class="container hero-content">
         <div class="hero-eyebrow reveal">ЖИВОЙ РЕПОРТАЖ</div>
-        <h1 class="reveal reveal-delay-1">
-          Выпускной только для<br />девочек
-          <em class="italic" style="color: var(--rose)">– так бывает?</em>
+        <h1 class="hero-title reveal reveal-delay-1">
+          <span class="hero-title-line-1">Выпускной только для девочек</span>
+          <em class="hero-title-line-2 italic" style="color: var(--rose)">– так бывает?</em>
         </h1>
         <a href="#hero-note" class="btn reveal reveal-delay-3">
           Смотреть репортаж
@@ -114,7 +115,6 @@
               style="
                 margin-top: 32px;
                 padding: 20px 24px;
-                border-left: 2px solid var(--gold);
                 background: rgba(201, 160, 96, 0.05);
                 border-radius: 0 12px 12px 0;
               "
@@ -175,7 +175,7 @@
      3. АТМОСФЕРА УТРА
 ══════════════════════════════════════ -->
     <section id="atmosphere" class="section diagonal-top diagonal-bottom">
-      <div class="atm-bg" data-parallax="0.25"></div>
+      <div class="atm-bg"></div>
       <div class="atm-overlay"></div>
 
       <div class="container" style="position: relative; z-index: 2">
@@ -244,7 +244,20 @@
       class="section"
       style="
         padding: clamp(80px, 10vw, 160px) 0;
-        background: linear-gradient(160deg, #13111e 0%, #0e0c12 100%);
+        min-height: clamp(520px, 70vh, 780px);
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 58%,
+            rgba(0, 0, 0, 0.75) 82%,
+            #000 100%
+          ),
+          linear-gradient(
+            160deg,
+            rgba(19, 17, 30, 0.82) 0%,
+            rgba(14, 12, 18, 0.88) 100%
+          ),
+          url('assets/photo/banket-bg.jpg') center / cover no-repeat;
       "
     >
       <div class="container">
@@ -339,7 +352,8 @@
         <div class="portraits-grid">
           <div class="portrait-card reveal">
             <div
-              class="photo photo-rose"
+              class="photo"
+              style="background-image: url('assets/img/galery/1.jpg')"
               data-label="Выпускница в вечернем платье"
             ></div>
             <div class="portrait-overlay">
@@ -349,7 +363,8 @@
           </div>
           <div class="portrait-card reveal reveal-delay-1">
             <div
-              class="photo photo-cool"
+              class="photo"
+              style="background-image: url('assets/img/galery/2.jpg')"
               data-label="Выпускник в костюме"
             ></div>
             <div class="portrait-overlay">
@@ -359,7 +374,8 @@
           </div>
           <div class="portrait-card reveal reveal-delay-2">
             <div
-              class="photo photo-violet"
+              class="photo"
+              style="background-image: url('assets/img/galery/3.jpg')"
               data-label="Подруги-выпускницы"
             ></div>
             <div class="portrait-overlay">
@@ -369,7 +385,8 @@
           </div>
           <div class="portrait-card reveal reveal-delay-1">
             <div
-              class="photo photo-gold"
+              class="photo"
+              style="background-image: url('assets/img/galery/4.jpg')"
               data-label="Выпускники — лучшие друзья"
             ></div>
             <div class="portrait-overlay">
@@ -377,21 +394,15 @@
               <div class="portrait-desc">«Дружба начинается в школе»</div>
             </div>
           </div>
-          <div class="portrait-card reveal reveal-delay-2">
-            <div
-              class="photo photo-morning"
-              data-label="Выпускница с мамой"
-            ></div>
-            <div class="portrait-overlay">
-              <div class="portrait-name">Вика и мама</div>
-              <div class="portrait-desc">«Мы обе плакали»</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <section id="karpenko" class="section">
+    <section
+      id="karpenko"
+      class="section"
+      style="min-height: clamp(680px, 85vh, 980px)"
+    >
       <div class="container">
         <div class="karpenko-stack">
           <div class="karpenko-peek" aria-hidden="true">
@@ -434,21 +445,33 @@
       </div>
     </section>
 
-    <section id="dress-salons" class="section">
+    <section
+      id="dress-salons"
+      class="section"
+      style="
+        background:
+          linear-gradient(
+            160deg,
+            rgba(19, 17, 30, 0.78) 0%,
+            rgba(14, 12, 18, 0.84) 100%
+          ),
+          url('assets/photo/salon-bg.jpg') center / cover no-repeat;
+      "
+    >
       <div class="container">
         <div class="dress-salons-layout">
           <div class="salons-carousel reveal-left" aria-label="Карусель платьев">
             <div class="salons-carousel-track">
-              <div class="salons-photo" style="background-image: url('assets/photo/1.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/2.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/3.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/2-1.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/2-2.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/2-3.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/serious-bg.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/man-smoking.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/1.jpg')"></div>
-              <div class="salons-photo" style="background-image: url('assets/photo/3.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/1.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/2.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/3.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/4.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/5.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/6.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/7.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/8.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/9.jpg')"></div>
+              <div class="salons-photo" style="background-image: url('assets/img/carousel-photo/1.jpg')"></div>
             </div>
           </div>
           <div class="dress-salons-card reveal">
@@ -737,23 +760,11 @@
               Автор:
               <strong
                 ><a
-                  href="https://www.sb.by/author/153467-violetta-dralyuk/"
+                  href="https://www.sb.by/author/473101-taisiya-azanovich/"
                   class="footer-credit-link"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >Виолетта Дралюк</a
-                ></strong
-              >
-            </p>
-            <p>
-              Фото:
-              <strong
-                ><a
-                  href="https://www.sb.by/author/photographers/1618111-kirill-stasko-20231115/"
-                  class="footer-credit-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Кирилл Стасько</a
+                  >Таисия Азанович</a
                 ></strong
               >
             </p>

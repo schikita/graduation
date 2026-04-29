@@ -112,9 +112,9 @@ nav.scrolled {
 }
 .logo-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
   font-weight: 700;
-  color: rgba(35,30,26,0.85);
+  color: rgba(20,18,16,0.92);
   letter-spacing: 0.05em;
   line-height: 1;
 }
@@ -141,22 +141,62 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .mobile-menu {
-  display: none; position: fixed; inset: 0; z-index: 99;
-  background: rgba(14,12,18,0.97);
-  backdrop-filter: blur(30px);
-  flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  padding: max(180px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+  background:
+    radial-gradient(ellipse at 20% 8%, rgba(201,160,96,0.14) 0%, rgba(201,160,96,0) 46%),
+    linear-gradient(180deg, rgba(14,12,18,0.96) 0%, rgba(10,9,14,0.98) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s ease;
 }
-.mobile-menu.open { display: flex; }
+.mobile-menu-splash {
+  width: min(220px, 60vw);
+  height: auto;
+  margin: 0 auto 18px;
+  opacity: 0.95;
+  pointer-events: none;
+  user-select: none;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
 .mobile-menu a {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem;
+  font-size: clamp(1.4rem, 7.2vw, 2rem);
   color: var(--champagne);
   text-decoration: none;
-  letter-spacing: 0.05em;
-  opacity: 0.85;
-  transition: opacity 0.3s;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 16px 18px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.24);
+  transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
 }
-.mobile-menu a:hover { opacity: 1; }
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible {
+  transform: translateX(4px);
+  border-color: rgba(201,160,96,0.62);
+  background: rgba(201,160,96,0.12);
+  outline: none;
+}
 
 /* ── HERO ── */
 #hero {
@@ -192,6 +232,8 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 }
 .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
 .hero-title { margin-bottom: 20px; color: var(--champagne); text-shadow: 0 2px 40px rgba(0,0,0,0.5); }
+.hero-title-line-1,
+.hero-title-line-2 { display: block; }
 .hero-sub {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -365,6 +407,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .atm-bg::after {
   content: '';
@@ -425,7 +468,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .org-note-card .org-note-quote {
   margin-top: 20px;
   padding-left: 16px;
-  border-left: 2px solid var(--gold);
   color: var(--champagne);
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
@@ -466,6 +508,9 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   padding: clamp(80px,10vw,160px) 0;
   background: var(--bg);
 }
+#portraits .portrait-card .photo::after {
+  display: none !important; /* убираем data-label с самих фото */
+}
 .portraits-header { text-align: center; margin-bottom: 60px; }
 .portraits-header h2 { color: var(--champagne); margin-bottom: 12px; }
 
@@ -483,6 +528,11 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .portrait-card:nth-child(1) { grid-row: span 2; }
 .portrait-card:nth-child(4) { grid-column: span 2; }
 .portrait-card .photo { width: 100%; height: 100%; min-height: 280px; }
+.portrait-card .photo {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .portrait-card:nth-child(1) .photo { min-height: 580px; }
 .portrait-card:nth-child(4) .photo { min-height: 280px; }
 
@@ -494,6 +544,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+.portrait-overlay { display: none; }
 .portrait-card:hover .portrait-overlay { opacity: 1; }
 .portrait-card:hover .photo { transform: scale(1.05); transition: transform 0.5s ease; }
 .portrait-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--champagne); }
@@ -536,9 +587,19 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  clip-path: polygon(0 4vw, 100% 0, 100% calc(100% - 4vw), 0 100%);
+  /* Expand clip-path region so rotated carousel photos are not cut */
+  --behind-clip-x: 6vw;
+  --behind-clip-y: 4vw;
+  clip-path: polygon(
+    calc(-1 * var(--behind-clip-x)) var(--behind-clip-y),
+    calc(100% + var(--behind-clip-x)) 0,
+    calc(100% + var(--behind-clip-x)) calc(100% - var(--behind-clip-y)),
+    calc(-1 * var(--behind-clip-x)) 100%
+  );
   padding-top: calc(clamp(80px,10vw,160px) + 4vw);
   padding-bottom: calc(clamp(80px,10vw,160px) + 4vw);
+  /* allow carousel photos to visually extend */
+  overflow: visible;
 }
 #behind::before {
   content: '';
@@ -621,6 +682,14 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: filter 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.karpenko-peek-photo:hover {
+  filter: saturate(1.08) brightness(1.05);
+  box-shadow: 0 26px 65px rgba(0,0,0,0.55);
+  border-color: rgba(201,160,96,0.75);
 }
 .karpenko-peek-photo.kp-1 {
   left: 13%;
@@ -784,10 +853,11 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 
 .v-slider {
   position: relative;
-  width: clamp(320px, 42vw, 520px);
+  width: clamp(340px, 45vw, 620px);
   aspect-ratio: 1 / 1;
   margin-left: auto;
   isolation: isolate;
+  overflow: visible;
 }
 .v-slide {
   position: absolute;
@@ -986,6 +1056,19 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   display: flex; align-items: center; justify-content: center;
   font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted);
 }
+#lightbox .lightbox-img::after { display: none; }
+#lb-img {
+  width: 70vw;
+  max-width: 70vw;
+  min-width: 0;
+  height: min(70vh, 560px);
+  max-height: 80vh;
+  min-height: 0;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  overflow: visible;
+}
 .lightbox-close {
   position: absolute; top: -40px; right: 0;
   background: none; border: none; color: var(--champagne);
@@ -1049,6 +1132,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   clip-path: polygon(0 4vw, 100% 0, 100% 100%, 0 100%);
   padding-top: calc(clamp(80px,10vw,140px) + 4vw);
 }
+#minigame { display: none !important; }
 .game-header { text-align: center; margin-bottom: 12px; }
 .game-header h2 { color: var(--champagne); }
 .game-header p { margin-bottom: 0; }
@@ -1547,17 +1631,327 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   .intro-grid { grid-template-columns: 1fr; }
   .intro-collage { height: 400px; }
   .behind-grid { grid-template-columns: 1fr; }
-  .v-slider { flex-direction: row; overflow-x: auto; }
+  .v-slider {
+    width: min(88vw, 360px);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  #behind {
+    --behind-clip-x: 10vw;
+    --behind-clip-y: 4.5vw;
+  }
   .v-slide:nth-child(2), .v-slide:nth-child(3) { margin-left: 0; }
   .game-layout { grid-template-columns: 1fr; }
   .game-avatar-panel { max-width: 340px; margin: 0 auto; width: 100%; }
   .dressup-preview-shell { grid-template-columns: 1fr; }
   .dressup-side { flex-direction: row; flex-wrap: wrap; }
+  /* Allow rotated/translated carousel photos to extend */
+  #behind {
+    clip-path: none;
+  }
 }
 
 @media(max-width: 768px) {
   .nav-links { display: none; }
   .burger { display: flex; }
+  /* Убрать секцию "Портреты" на мобильной версии */
+  #portraits { display: none !important; }
+  .mobile-menu a[href="#portraits"] { display: none; }
+  /* Allow rotated/translated carousel photos to extend */
+  #behind {
+    clip-path: none;
+  }
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) {
+    --mobile-text-color: rgba(245, 240, 232, 0.94);
+    --mobile-muted-color: rgba(245, 240, 232, 0.86);
+    --mobile-heading-color: var(--champagne);
+  }
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) h1,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) h2,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) h3,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) .label {
+    color: var(--mobile-heading-color);
+  }
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) p,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) li,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) .story-quote,
+  :is(
+    #hero-note,
+    #intro,
+    #atmosphere,
+    #org-note,
+    #behind,
+    #portraits,
+    #details,
+    #karpenko,
+    #men-look,
+    #dress-salons,
+    #cinematic,
+    #gallery,
+    #stories,
+    #minigame
+  ) .progress-label {
+    color: var(--mobile-muted-color);
+  }
+  /* Для светлого фона: добавить секции класс .mobile-light-section */
+  .mobile-light-section {
+    --mobile-text-color: rgba(20, 18, 16, 0.92);
+    --mobile-muted-color: rgba(20, 18, 16, 0.82);
+    --mobile-heading-color: rgba(20, 18, 16, 0.96);
+  }
+  .mobile-light-section h1,
+  .mobile-light-section h2,
+  .mobile-light-section h3,
+  .mobile-light-section .label {
+    color: var(--mobile-heading-color);
+  }
+  .mobile-light-section p,
+  .mobile-light-section li,
+  .mobile-light-section .story-quote,
+  .mobile-light-section .progress-label {
+    color: var(--mobile-muted-color);
+  }
+  #karpenko {
+    min-height: auto;
+    padding-bottom: calc(clamp(70px, 9vw, 140px) + 82px);
+  }
+  #karpenko .karpenko-stack {
+    padding-bottom: 72px;
+  }
+  #karpenko .karpenko-peek {
+    top: auto;
+    bottom: 0;
+    height: 0;
+  }
+  #karpenko .karpenko-peek-photo {
+    top: auto;
+    bottom: 0;
+    width: clamp(110px, 30vw, 136px);
+    border-radius: 12px;
+  }
+  #karpenko .karpenko-peek-photo.kp-1 {
+    left: 6%;
+    transform: translateY(44%) rotate(-13deg);
+  }
+  #karpenko .karpenko-peek-photo.kp-2 {
+    left: 36%;
+    transform: translateY(44%) rotate(12deg);
+  }
+  #karpenko .karpenko-peek-photo.kp-3 {
+    left: 64%;
+    transform: translateY(44%) rotate(-10deg);
+  }
+  #behind .v-slider {
+    width: min(86vw, 340px);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  #behind {
+    --behind-clip-x: 14vw;
+    --behind-clip-y: 5vw;
+  }
+  #behind .v-slide .photo {
+    border-radius: 14px;
+  }
+  #org-note {
+    background-image: url('assets/photo/mobile-organization.jpg');
+    background-position: center;
+  }
+  #cinematic {
+    background-image: url('assets/photo/mobile-organization-1.jpg');
+    background-position: center;
+  }
+  #gallery {
+    background-image: url('assets/photo/mobile-organization-2.jpg');
+    background-position: center;
+  }
+  #stories {
+    position: relative;
+    background-image: url('assets/photo/mobile-organization-3.jpg');
+    background-position: center;
+  }
+  #gallery::before {
+    background: linear-gradient(
+      180deg,
+      rgba(14, 12, 18, 0.84) 0%,
+      rgba(14, 12, 18, 0.74) 48%,
+      rgba(14, 12, 18, 0.9) 100%
+    );
+  }
+  #stories::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(14, 12, 18, 0.8) 0%,
+      rgba(14, 12, 18, 0.7) 50%,
+      rgba(14, 12, 18, 0.86) 100%
+    );
+    pointer-events: none;
+  }
+  #stories .container {
+    position: relative;
+    z-index: 1;
+  }
+  #cinematic::before {
+    background: linear-gradient(
+      180deg,
+      rgba(14, 12, 18, 0.82) 0%,
+      rgba(14, 12, 18, 0.72) 45%,
+      rgba(14, 12, 18, 0.86) 100%
+    );
+  }
+  .hero-title-line-1 {
+    white-space: normal;
+    text-wrap: balance;
+  }
+  .logo-text {
+    color: rgba(20,18,16,0.92);
+  }
+  body.below-hero .logo-text,
+  body.mobile-menu-open .logo-text {
+    color: var(--champagne);
+  }
+  nav {
+    padding: 14px clamp(16px, 4vw, 24px);
+  }
+  nav.scrolled {
+    padding: 10px clamp(16px, 4vw, 24px);
+  }
+  .burger {
+    gap: 4px;
+    padding: 8px;
+    border: 1px solid rgba(240,235,227,0.25);
+    border-radius: 10px;
+    background: rgba(14,12,18,0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .burger span {
+    width: 22px;
+    height: 2px;
+  }
   .portraits-grid { grid-template-columns: 1fr; }
   .portrait-card:nth-child(1) { grid-row: span 1; }
   .stories-grid { grid-template-columns: 1fr; }
@@ -1566,6 +1960,36 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   #back-top { bottom: 20px; right: 20px; }
   .game-options { grid-template-columns: repeat(2, 1fr); }
   .behind-grid { gap: 40px; }
+  /* Footer (контактные данные) */
+  #contact-footer.footer-section {
+    padding: clamp(44px, 8vw, 64px) 0;
+    background: linear-gradient(180deg, #0b0a10 0%, rgba(14,12,18,1) 100%);
+  }
+  #contact-footer .footer-content {
+    gap: 14px;
+  }
+  #contact-footer .footer-credits {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  #contact-footer .footer-credits p {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: rgba(240,235,227,0.72);
+    overflow-wrap: anywhere;
+  }
+  #contact-footer .footer-credit-link {
+    display: inline-block;
+    border-bottom-color: rgba(201,160,96,0.55);
+  }
+  #contact-footer .site-footer .footer-copy,
+  #contact-footer .footer-copy {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: rgba(240,235,227,0.48);
+    margin-top: 10px;
+  }
 }
 
 @media(max-width: 480px) {

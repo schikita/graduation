@@ -7,11 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── NAV SCROLL BLUR ── */
   const nav = document.querySelector('nav');
   const backTop = document.getElementById('back-top');
-  window.addEventListener('scroll', () => {
+  const hero = document.getElementById('hero');
+  const updateNavState = () => {
     const y = window.scrollY;
     nav.classList.toggle('scrolled', y > 60);
     backTop.classList.toggle('visible', y > 400);
-  }, { passive: true });
+    if (hero) {
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      document.body.classList.toggle('below-hero', y >= heroBottom - 80);
+    }
+  };
+  window.addEventListener('scroll', updateNavState, { passive: true });
+  window.addEventListener('resize', updateNavState);
+  updateNavState();
 
   /* ── BURGER MENU ── */
   const burger = document.querySelector('.burger');
@@ -19,15 +27,31 @@ document.addEventListener('DOMContentLoaded', () => {
   burger.addEventListener('click', () => {
     burger.classList.toggle('open');
     mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    const isOpen = mobileMenu.classList.contains('open');
+    document.body.classList.toggle('mobile-menu-open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
   document.querySelectorAll('.mobile-menu a').forEach(a => {
     a.addEventListener('click', () => {
       burger.classList.remove('open');
       mobileMenu.classList.remove('open');
+      document.body.classList.remove('mobile-menu-open');
       document.body.style.overflow = '';
     });
   });
+
+  /* ── HERO CTA MOBILE OFFSET ── */
+  const heroCta = document.querySelector('.hero-content .btn[href="#hero-note"]');
+  const heroNote = document.getElementById('hero-note');
+  if (heroCta && heroNote) {
+    heroCta.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      e.preventDefault();
+      const extraOffset = 56;
+      const targetY = heroNote.getBoundingClientRect().top + window.pageYOffset + extraOffset;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    });
+  }
 
   /* ── BACK TO TOP ── */
   backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -168,8 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function showLb() {
     const item = lbItems[lbIdx];
-    lbImg.className = 'lightbox-img photo ' + (item.cls || 'photo-warm');
+    lbImg.className = 'lightbox-img photo' + (item.cls ? ' ' + item.cls : '');
     lbImg.setAttribute('data-label', item.label || '');
+    if (item.bg) {
+      lbImg.style.backgroundImage = `url('${item.bg}')`;
+    } else {
+      lbImg.style.backgroundImage = '';
+    }
   }
   document.getElementById('lb-close').addEventListener('click', () => {
     lightbox.classList.remove('open');
@@ -197,6 +226,37 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.masonry-item').forEach((el, i) => {
     el.addEventListener('click', () => openLightbox(galleryItems, i % galleryItems.length));
   });
+
+  // Portraits lightbox items (Образы выпускников)
+  const portraitsItems = [
+    { bg: 'assets/img/galery/1.jpg', label: 'Выпускница в вечернем платье' },
+    { bg: 'assets/img/galery/2.jpg', label: 'Выпускник в костюме' },
+    { bg: 'assets/img/galery/3.jpg', label: 'Подруги-выпускницы' },
+    { bg: 'assets/img/galery/4.jpg', label: 'Выпускники — лучшие друзья' },
+  ];
+  const portraitPhotos = document.querySelectorAll('#portraits .portrait-card .photo');
+  if (portraitPhotos.length) {
+    portraitPhotos.forEach((el, i) => {
+      el.addEventListener('click', () => {
+        openLightbox(portraitsItems, i % portraitsItems.length);
+      });
+    });
+  }
+
+  // Karpenko note photos lightbox items
+  const karpenkoPhotos = document.querySelectorAll('#karpenko .karpenko-peek-photo');
+  const karpenkoItems = [
+    { bg: 'assets/photo/2-1.jpg', label: 'Фото Карпенко 1' },
+    { bg: 'assets/photo/2-2.jpg', label: 'Фото Карпенко 2' },
+    { bg: 'assets/photo/2-3.jpg', label: 'Фото Карпенко 3' },
+  ];
+  if (karpenkoPhotos.length) {
+    karpenkoPhotos.forEach((el, i) => {
+      el.addEventListener('click', () => {
+        openLightbox(karpenkoItems, i % karpenkoItems.length);
+      });
+    });
+  }
 
   /* ── MINI-GAME ── */
   const gameProfiles = {
