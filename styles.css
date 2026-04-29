@@ -432,7 +432,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   position: absolute; inset: 0;
   background-image: none;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
