@@ -21,6 +21,73 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateNavState);
   updateNavState();
 
+  /* ── LAZY LOAD (img[data-defer-src] + inline background-image) ── */
+  // Load only when the element actually enters the viewport.
+  const lazyRootMargin = '0px';
+  const lazyObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+
+      const deferSrc = el.getAttribute && el.getAttribute('data-defer-src');
+      if (deferSrc) {
+        if (el.tagName === 'IMG' || el.tagName === 'IFRAME') {
+          el.src = deferSrc;
+        } else if (el.tagName === 'VIDEO') {
+          el.src = deferSrc;
+          el.load();
+        }
+        el.removeAttribute('data-defer-src');
+      }
+
+      const bgDefer = el.dataset && el.dataset.bgDefer;
+      if (bgDefer) {
+        el.style.backgroundImage = bgDefer;
+        delete el.dataset.bgDefer;
+      }
+
+      const lazyBgDesktop = el.dataset && el.dataset.lazyBg;
+      const lazyBgMobile = el.dataset && el.dataset.lazyBgMobile;
+      if (lazyBgDesktop || lazyBgMobile) {
+        const useUrl =
+          (window.innerWidth <= 768 && lazyBgMobile) ? lazyBgMobile : lazyBgDesktop;
+        if (useUrl) {
+          el.style.backgroundImage = `url('${useUrl}')`;
+        }
+        delete el.dataset.lazyBg;
+        delete el.dataset.lazyBgMobile;
+      }
+
+      obs.unobserve(el);
+    });
+  }, { root: null, rootMargin: lazyRootMargin, threshold: 0.01 });
+
+  // 1) Regular images (projects, logo if converted later, etc.)
+  document.querySelectorAll('img[data-defer-src], iframe[data-defer-src], video[data-defer-src]').forEach((el) => {
+    lazyObserver.observe(el);
+  });
+
+  // 2) Inline background-image (url(...) only) - move it from style -> data-bgDefer
+  // This prevents browser from fetching all inline background images up-front.
+  document.querySelectorAll('[style*="background-image"]').forEach((el) => {
+    const bg = el.style.backgroundImage;
+    if (bg && bg !== 'none' && bg.includes('url')) {
+      el.dataset.bgDefer = bg;
+      el.style.backgroundImage = 'none';
+    }
+    lazyObserver.observe(el);
+  });
+
+  // 2.5) Elements that already have background in data-bg-defer (e.g. karpenko peek)
+  document.querySelectorAll('[data-bg-defer]').forEach((el) => {
+    if (el.dataset && el.dataset.bgDefer) lazyObserver.observe(el);
+  });
+
+  // 3) Background-image lazily by data attributes (sections backgrounds)
+  document
+    .querySelectorAll('[data-lazy-bg], [data-lazy-bg-mobile], [data-bg-defer]')
+    .forEach((el) => lazyObserver.observe(el));
+
   /* ── BURGER MENU ── */
   const burger = document.querySelector('.burger');
   const mobileMenu = document.querySelector('.mobile-menu');

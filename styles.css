@@ -205,7 +205,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url('assets/img/hero.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -280,7 +280,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 #hero-note {
   margin-top: -260px;
   padding: calc(clamp(40px, 6vw, 80px) + 260px) 0 clamp(40px, 6vw, 80px);
-  background-image: url('assets/img/begin-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -330,7 +330,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── INTRO SECTION ── */
 #intro {
   padding: clamp(80px,10vw,160px) 0;
-  background-image: url('assets/img/vals-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -403,7 +403,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 }
 .atm-bg {
   position: absolute; inset: 0;
-  background-image: url('assets/img/org-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -430,7 +430,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 #org-note {
   min-height: 86vh;
   padding: clamp(40px, 6vw, 70px) 0;
-  background-image: url('assets/img/bg-org-2.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -553,7 +553,34 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── DETAILS ── */
 #details {
   padding: clamp(80px,10vw,160px) 0;
-  background: linear-gradient(160deg, #13111e 0%, #0e0c12 100%);
+  background: none;
+  background-image: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+#details::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 58%,
+      rgba(0, 0, 0, 0.75) 82%,
+      #000 100%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(19, 17, 30, 0.82) 0%,
+      rgba(14, 12, 18, 0.88) 100%
+    );
+  z-index: 0;
+  pointer-events: none;
+}
+#details .container {
+  position: relative;
+  z-index: 1;
 }
 .details-header { margin-bottom: 48px; }
 .details-header h2 { color: var(--champagne); }
@@ -582,7 +609,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── BEHIND SCENES ── */
 #behind {
   padding: clamp(80px,10vw,160px) 0;
-  background-image: url('assets/photo/sale-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -616,7 +643,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── KARPENKO NOTE ── */
 #karpenko {
   padding: clamp(70px, 9vw, 140px) 0;
-  background-image: url('assets/photo/serious-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -713,7 +740,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   display: flex;
   align-items: center;
   padding: clamp(80px, 10vw, 160px) 0;
-  background-image: url('assets/photo/man-smoking.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -879,9 +906,9 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-repeat: no-repeat;
 }
 
-#behind .v-slide:nth-child(1) .photo { background-image: url('assets/photo/1.jpg'); }
-#behind .v-slide:nth-child(2) .photo { background-image: url('assets/photo/2.jpg'); }
-#behind .v-slide:nth-child(3) .photo { background-image: url('assets/photo/3.jpg'); }
+#behind .v-slide:nth-child(1) .photo { background-image: none; }
+#behind .v-slide:nth-child(2) .photo { background-image: none; }
+#behind .v-slide:nth-child(3) .photo { background-image: none; }
 #behind .v-slider .photo::after { display: none; }
 
 @keyframes behindFade {
@@ -898,7 +925,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   display: flex;
   align-items: center;
   padding: clamp(80px,10vw,140px) 0;
-  background-image: url('assets/photo/nuans-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -954,7 +981,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   display: flex;
   align-items: center;
   padding: clamp(80px,10vw,140px) 0;
-  background-image: url('assets/photo/ideol-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1091,7 +1118,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── STORIES ── */
 #stories {
   padding: clamp(80px,10vw,160px) 0;
-  background-image: url('assets/photo/pitanie-bg.jpg');
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1429,20 +1456,25 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .projects-section__bg {
   position: absolute;
   inset: 0;
-  background-image: url('assets/photo/ideol-bg.jpg');
+  background-image: none;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   opacity: 0.16;
 }
 .projects-section__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(14, 12, 18, 0.72) 0%,
-    rgba(14, 12, 18, 0.86) 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      rgba(14, 12, 18, 0.78) 0%,
+      rgba(14, 12, 18, 0.9) 100%
+    ),
+    url('assets/img/begin-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 .projects-inner {
   position: relative;
@@ -1461,14 +1493,14 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   line-height: 1.15;
 }
 .projects-viewport {
-  overflow-x: auto;
+  overflow-x: hidden;
   padding-bottom: 8px;
 }
 .projects-stage {
   display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  min-width: 860px;
+  min-width: 0;
 }
 .project-card {
   position: relative;
@@ -1508,6 +1540,11 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   font-size: clamp(1.1rem, 1.8vw, 1.55rem);
   line-height: 1.3;
   color: var(--champagne);
+}
+.project-card.is-active .project-info h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .projects-footer {
   display: flex;
@@ -1874,20 +1911,20 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
     border-radius: 14px;
   }
   #org-note {
-    background-image: url('assets/photo/mobile-organization.jpg');
+    background-image: none;
     background-position: center;
   }
   #cinematic {
-    background-image: url('assets/photo/mobile-organization-1.jpg');
+    background-image: none;
     background-position: center;
   }
   #gallery {
-    background-image: url('assets/photo/mobile-organization-2.jpg');
+    background-image: none;
     background-position: center;
   }
   #stories {
     position: relative;
-    background-image: url('assets/photo/mobile-organization-3.jpg');
+    background-image: none;
     background-position: center;
   }
   #gallery::before {
