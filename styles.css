@@ -506,7 +506,22 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── PORTRAITS ── */
 #portraits {
   padding: clamp(80px,10vw,160px) 0;
-  background: var(--bg);
+  background-image: url('assets/img/galery-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+#portraits::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 12, 18, 0.58);
+  pointer-events: none;
+}
+#portraits .container {
+  position: relative;
+  z-index: 1;
 }
 #portraits .portrait-card .photo::after {
   display: none !important; /* убираем data-label с самих фото */
