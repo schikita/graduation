@@ -486,7 +486,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background: rgba(255,255,255,0.03);
 }
 .org-note-card p {
-  font-size: clamp(1rem, 1.55vw, 1.18rem);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
   line-height: 1.75;
 }
 .org-note-card > p:not(.org-note-quote) {
