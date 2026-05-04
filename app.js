@@ -452,198 +452,123 @@ document.addEventListener('DOMContentLoaded', () => {
           ]
         }
       ]
-    },
-    male: {
-      title: 'Выпускник',
-      bodyClass: 'male',
-      steps: [
-        {
-          key: 'outfit',
-          title: 'Выбери костюм',
-          options: [
-            {
-              label: 'Классический чёрный',
-              cls: 'photo-cool',
-              layerClass: 'look-outfit-black',
-              previewImage: 'assets/minigame/male_outfit_black.png'
-            },
-            {
-              label: 'Синий slim-fit',
-              cls: 'photo-violet',
-              layerClass: 'look-outfit-blue',
-              previewImage: 'assets/minigame/male_outfit_blue.png'
-            },
-            {
-              label: 'Светлый летний',
-              cls: 'photo-morning',
-              layerClass: 'look-outfit-light',
-              previewImage: 'assets/minigame/male_outfit_light.png'
-            },
-            {
-              label: 'Смокинг',
-              cls: 'photo-gold',
-              layerClass: 'look-outfit-tux',
-              previewImage: 'assets/minigame/male_outfit_tux.png'
-            }
-          ]
-        },
-        {
-          key: 'shoes',
-          title: 'Выбери обувь',
-          options: [
-            {
-              label: 'Оксфорды',
-              cls: 'photo-gold',
-              layerClass: 'look-shoes-oxford',
-              previewImage: 'assets/minigame/male_shoes_oxford.png'
-            },
-            {
-              label: 'Лоферы',
-              cls: 'photo-cool',
-              layerClass: 'look-shoes-loafers-male',
-              previewImage: 'assets/minigame/male_shoes_loafers.png'
-            },
-            {
-              label: 'Монки',
-              cls: 'photo-warm',
-              layerClass: 'look-shoes-monks',
-              previewImage: 'assets/minigame/male_shoes_monks.png'
-            },
-            {
-              label: 'Дерби',
-              cls: 'photo-rose',
-              layerClass: 'look-shoes-derby',
-              previewImage: 'assets/minigame/male_shoes_derby.png'
-            }
-          ]
-        },
-        {
-          key: 'accessory',
-          title: 'Выбери аксессуар',
-          options: [
-            {
-              label: 'Галстук',
-              cls: 'photo-violet',
-              layerClass: 'look-accessory-tie',
-              previewImage: 'assets/minigame/male_accessory_tie.png'
-            },
-            {
-              label: 'Бабочка',
-              cls: 'photo-rose',
-              layerClass: 'look-accessory-bow',
-              previewImage: 'assets/minigame/male_accessory_bow.png'
-            },
-            {
-              label: 'Подтяжки',
-              cls: 'photo-cool',
-              layerClass: 'look-accessory-suspenders',
-              previewImage: 'assets/minigame/male_accessory_suspenders.png'
-            },
-            {
-              label: 'Карманный платок',
-              cls: 'photo-gold',
-              layerClass: 'look-accessory-pocket',
-              previewImage: 'assets/minigame/male_accessory_pocket.png'
-            }
-          ]
-        },
-        {
-          key: 'flower',
-          title: 'Выбери бутоньерку',
-          options: [
-            {
-              label: 'Белая роза',
-              cls: 'photo-rose',
-              layerClass: 'look-flower-rose',
-              previewImage: 'assets/minigame/male_flower_rose.png'
-            },
-            {
-              label: 'Лаванда',
-              cls: 'photo-violet',
-              layerClass: 'look-flower-lavender',
-              previewImage: 'assets/minigame/male_flower_lavender.png'
-            },
-            {
-              label: 'Гипсофила',
-              cls: 'photo-morning',
-              layerClass: 'look-flower-gyps',
-              previewImage: 'assets/minigame/male_flower_gyps.png'
-            },
-            {
-              label: 'Пион',
-              cls: 'photo-gold',
-              layerClass: 'look-flower-peony',
-              previewImage: 'assets/minigame/male_flower_peony.png'
-            }
-          ]
-        }
-      ]
     }
   };
-  const characterStep = {
-    key: 'character',
-    title: 'Кого собираем?',
-    options: [
-      {
-        label: 'Выпускницу',
-        cls: 'photo-rose',
-        profile: 'female',
-        layerClass: 'look-character-female',
-        previewImage: 'assets/minigame/base_female.png'
-      },
-      {
-        label: 'Выпускника',
-        cls: 'photo-cool',
-        profile: 'male',
-        layerClass: 'look-character-male',
-        previewImage: 'assets/minigame/base_male.png'
-      }
-    ]
+
+  const heroineMeta = {
+    label: 'Выпускницу',
+    badgeName: 'Выпускница',
+    profile: 'female',
+    layerClass: 'look-character-female',
+    previewImage: 'assets/minigame/base_female.png'
   };
 
   let currentStep = 0;
-  let currentProfile = null;
   const selections = {};
+  let gameRenderGeneration = 0;
 
+  const minigameSection = document.getElementById('minigame');
   const gameStage = document.getElementById('game-stage');
   const gameResult = document.getElementById('game-result');
   const progressDots = document.querySelectorAll('.progress-dot');
   const progressLabel = document.querySelector('.progress-label');
   const resultBadge = document.querySelector('.result-badge');
-  const resultHint = gameResult ? gameResult.querySelector('p') : null;
+  const resultHint = document.getElementById('result-hint');
+  const resultHeroWrap = document.getElementById('result-hero-wrap');
+  const resultSummaryEl = document.getElementById('result-summary');
 
   function getActiveSteps() {
-    return [characterStep].concat(currentProfile ? gameProfiles[currentProfile].steps : []);
+    return gameProfiles.female.steps;
+  }
+
+  /** Для выпускницы: наряды 1–2 → жемчуг и клатч; наряды 3–4 → серьги и венок. */
+  function getGameOptionRows(step) {
+    if (step.key === 'accessory') {
+      const oi = parseInt(selections.outfit, 10);
+      const indices = !Number.isNaN(oi) && oi >= 2 ? [1, 3] : [0, 2];
+      return indices.map((idx) => ({ opt: step.options[idx], idx }));
+    }
+    return step.options.map((opt, idx) => ({ opt, idx }));
+  }
+
+  function normalizeFemaleAccessorySelection() {
+    if (selections.accessory === undefined) return;
+    const outfitIdx = parseInt(selections.outfit, 10);
+    const allowed = !Number.isNaN(outfitIdx) && outfitIdx >= 2 ? [1, 3] : [0, 2];
+    if (!allowed.includes(selections.accessory)) delete selections.accessory;
+  }
+
+  function getBouquetLayerMarkup() {
+    const stepKey = 'flowers';
+    const idx = selections[stepKey];
+    if (idx === undefined) return '';
+    const profileData = gameProfiles.female;
+    const step = profileData.steps.find((s) => s.key === stepKey);
+    const opt = step?.options[idx];
+    if (!opt?.layerClass) return '';
+    return `<div class="dressup-layer dressup-bouquet ${opt.layerClass}" aria-hidden="true"></div>`;
   }
 
   function getCharacterMarkup() {
-    if (selections.character === undefined) {
-      return '<div class="dressup-placeholder">Сначала выберите персонажа</div>';
-    }
-    const charOpt = characterStep.options[selections.character];
-    const profileData = gameProfiles[charOpt.profile];
-    const selectedOutfitIndex = selections.outfit;
-    if (selectedOutfitIndex !== undefined) {
-      const selectedOutfit = profileData.steps.find(s => s.key === 'outfit')?.options[selectedOutfitIndex];
+    const profileData = gameProfiles.female;
+    const outfitIdx = parseInt(selections.outfit, 10);
+    if (!Number.isNaN(outfitIdx)) {
+      const selectedOutfit = profileData.steps.find(s => s.key === 'outfit')?.options[outfitIdx];
       if (selectedOutfit?.previewImage) {
         let transformedImage = selectedOutfit.previewImage;
-        if (charOpt.profile === 'female') {
-          transformedImage = `assets/minigame/female_outfut_done/female_output_${selectedOutfitIndex + 1}.png`;
-        } else if (charOpt.profile === 'male') {
-          transformedImage = `assets/minigame/male_output_done/male_output_${selectedOutfitIndex + 1}.png`;
+        const shoeRaw = selections.shoes;
+        const shoeIdx = shoeRaw === undefined || shoeRaw === null || shoeRaw === ''
+          ? NaN
+          : parseInt(shoeRaw, 10);
+        const dressNum = outfitIdx + 1;
+        const outfitCount = profileData.steps.find(s => s.key === 'outfit')?.options.length ?? 4;
+        const hasShoes = !Number.isNaN(shoeIdx);
+        const shoeNum = hasShoes ? Math.min(3, Math.max(0, shoeIdx)) + 1 : NaN;
+        const acRaw = selections.accessory;
+        const acNum = acRaw === undefined || acRaw === null || acRaw === ''
+          ? NaN
+          : parseInt(acRaw, 10);
+        /* Наряды 1–2 + обувь + жемчуг/клатч: assets/minigame/acsessuars/{1|2}-1/ */
+        const hasAccessoryLayerForDress = dressNum === 1 || dressNum === 2;
+        const usePearlClutchAccessoryComposite =
+          (outfitIdx === 0 || outfitIdx === 1) &&
+          hasShoes &&
+          !Number.isNaN(acNum) &&
+          (acNum === 0 || acNum === 2) &&
+          hasAccessoryLayerForDress;
+        if (usePearlClutchAccessoryComposite) {
+          const acSlot = acNum === 0 ? 1 : 2;
+          const accBase = `assets/minigame/acsessuars/${dressNum}-1`;
+          if (shoeNum === 1) {
+            transformedImage = `${accBase}/female_output_${dressNum}-acssesuars-1-${acSlot}.png`;
+          } else {
+            transformedImage = `${accBase}/female_output_${dressNum}-obuv-${shoeNum}-${acSlot}.png`;
+          }
+        } else if (
+          (outfitIdx === 2 || outfitIdx === 3) &&
+          hasShoes &&
+          !Number.isNaN(acNum) &&
+          (acNum === 1 || acNum === 3)
+        ) {
+          /* Наряды 3–4 + обувь + серьги/венок: acsessuars/{3|4}-1/ …-acssesuars-{обувь}-{слот}.png */
+          const acSlot = acNum === 1 ? 1 : 2;
+          const accBase = `assets/minigame/acsessuars/${dressNum}-1`;
+          transformedImage = `${accBase}/female_output_${dressNum}-acssesuars-${shoeNum}-${acSlot}.png`;
+        } else if (outfitIdx >= 0 && outfitIdx < outfitCount && hasShoes) {
+          transformedImage = `assets/minigame/obuv-female/female_output_${dressNum}-obuv-${shoeNum}.png`;
+        } else {
+          transformedImage = `assets/minigame/female_outfut_done/female_output_${dressNum}.png`;
         }
-        return `<div class="dressup-layer dressup-body transformed" style="background-image:url('${transformedImage}')"></div>`;
+        const bouquet = getBouquetLayerMarkup();
+        return `<div class="dressup-layer dressup-body transformed" style="background-image:url('${transformedImage}')"></div>${bouquet}`;
       }
     }
-    return `<div class="dressup-layer dressup-body ${profileData.bodyClass}"></div>`;
+    const bouquet = getBouquetLayerMarkup();
+    return `<div class="dressup-layer dressup-body ${profileData.bodyClass}"></div>${bouquet}`;
   }
 
   function getSelectedItemsMarkup() {
-    if (selections.character === undefined) {
-      return { left: '', right: '' };
-    }
-    const charOpt = characterStep.options[selections.character];
-    const profileData = gameProfiles[charOpt.profile];
+    const profileData = gameProfiles.female;
     const cards = [];
     profileData.steps.forEach(step => {
       if (step.key === 'outfit') return;
@@ -652,7 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cards.push(`
           <div class="dressup-selected-item">
             <div class="dressup-selected-thumb${opt.previewImage ? '' : ' no-image'}" ${opt.previewImage ? `style="background-image:url('${opt.previewImage}');"` : ''}></div>
-            <div class="dressup-selected-label">${step.title.replace('Выбери ', '')}: ${opt.label}</div>
           </div>
         `);
       }
@@ -664,11 +588,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderStep(idx) {
+    normalizeFemaleAccessorySelection();
+    const gameHeader = document.querySelector('#minigame .game-header');
+    if (gameHeader) gameHeader.classList.toggle('game-header--playing', currentStep > 0);
+    if (minigameSection) {
+      minigameSection.classList.toggle('minigame--playing', currentStep > 0);
+      minigameSection.classList.remove('minigame--result');
+    }
     const activeSteps = getActiveSteps();
     const step = activeSteps[idx];
-    const selectedItems = getSelectedItemsMarkup();
+    const optionRows = getGameOptionRows(step);
+    const gen = ++gameRenderGeneration;
     gameStage.style.opacity = 0;
     setTimeout(() => {
+      if (gen !== gameRenderGeneration) return;
+      const selectedItems = getSelectedItemsMarkup();
       gameStage.innerHTML = `
         <div class="game-layout">
           <div class="game-avatar-panel reveal visible">
@@ -685,9 +619,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="game-question reveal visible">
               <h3>${step.title}</h3>
             </div>
-            <div class="game-options">
-              ${step.options.map((opt, i) => `
-                <div class="game-option ${selections[step.key] === i ? 'selected' : ''}" data-step-key="${step.key}" data-idx="${i}">
+            <div class="game-options${optionRows.length === 2 ? ' game-options--pair' : ''}">
+              ${optionRows.map(({ opt, idx }) => `
+                <div class="game-option ${selections[step.key] === idx ? 'selected' : ''}" data-step-key="${step.key}" data-idx="${idx}">
                   <div class="photo ${opt.cls}" data-label="${opt.previewImage ? '' : opt.label}" ${opt.previewImage ? `style="background-image:url('${opt.previewImage}');background-size:contain;background-position:center;background-repeat:no-repeat;"` : ''}></div>
                   <div class="game-option-label">${opt.label}</div>
                   <div class="game-option-check">✓</div>
@@ -705,16 +639,14 @@ document.addEventListener('DOMContentLoaded', () => {
       gameStage.style.transition = 'opacity 0.4s';
 
       gameStage.querySelectorAll('.game-option').forEach(opt => {
-        opt.addEventListener('click', () => {
-          const stepKey = opt.dataset.stepKey;
-          const selectedIndex = parseInt(opt.dataset.idx, 10);
+        opt.addEventListener('click', (e) => {
+          const card = e.currentTarget;
+          const stepKey = card.dataset.stepKey;
+          const selectedIndex = parseInt(card.getAttribute('data-idx'), 10);
+          if (Number.isNaN(selectedIndex)) return;
           selections[stepKey] = selectedIndex;
-          if (stepKey === 'character') {
-            const selectedProfile = characterStep.options[selectedIndex].profile;
-            if (currentProfile && currentProfile !== selectedProfile) {
-              gameProfiles[currentProfile].steps.forEach(profileStep => delete selections[profileStep.key]);
-            }
-            currentProfile = selectedProfile;
+          if (stepKey === 'outfit') {
+            delete selections.accessory;
           }
           renderStep(currentStep);
         });
@@ -756,28 +688,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showResult() {
-    const activeSteps = getActiveSteps();
     gameStage.style.display = 'none';
     gameResult.classList.add('show');
-    const charOpt = selections.character !== undefined ? characterStep.options[selections.character] : null;
-    if (charOpt) {
-      if (resultBadge) resultBadge.textContent = `✨ ${charOpt.label} готов${charOpt.profile === 'female' ? 'а' : ''} к выпускному!`;
-      if (resultHint) resultHint.textContent = 'Образ собран. Отличный выбор!';
+    if (minigameSection) {
+      minigameSection.classList.remove('minigame--playing');
+      minigameSection.classList.add('minigame--result');
     }
-    document.getElementById('result-summary').innerHTML = activeSteps.map(step => {
-      const sel = selections[step.key] !== undefined ? step.options[selections[step.key]].label : '—';
-      return `<div class="result-item"><div class="result-item-cat">${step.title.replace('Выбери ', '')}</div><div class="result-item-val">${sel}</div></div>`;
-    }).join('');
+    if (resultBadge) {
+      const who = heroineMeta.badgeName || heroineMeta.label;
+      resultBadge.textContent = `✨ ${who} готова к выпускному!`;
+    }
+    if (resultHeroWrap) {
+      resultHeroWrap.innerHTML = `<div class="dressup-preview dressup-preview--result">${getCharacterMarkup()}</div>`;
+    }
+    if (resultHint) resultHint.style.display = 'none';
+    if (resultSummaryEl) {
+      resultSummaryEl.innerHTML = '';
+      resultSummaryEl.style.display = 'none';
+    }
     launchConfetti();
     progressDots.forEach(d => d.classList.add('done'));
   }
 
   document.getElementById('g-restart').addEventListener('click', () => {
     currentStep = 0;
-    currentProfile = null;
     Object.keys(selections).forEach(k => delete selections[k]);
     gameStage.style.display = '';
     gameResult.classList.remove('show');
+    if (minigameSection) minigameSection.classList.remove('minigame--result');
+    if (resultHeroWrap) resultHeroWrap.innerHTML = '';
+    if (resultHint) {
+      resultHint.style.display = '';
+      resultHint.textContent = 'Твой образ собран. Ты великолепна.';
+    }
+    if (resultSummaryEl) resultSummaryEl.style.display = '';
     updateProgress();
     renderStep(0);
   });

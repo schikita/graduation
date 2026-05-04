@@ -238,7 +238,14 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   display: flex; align-items: center; gap: 12px;
 }
 .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
-.hero-title { margin-bottom: 20px; color: var(--champagne); text-shadow: 0 2px 40px rgba(0,0,0,0.5); }
+.hero-title {
+  position: relative;
+  top: 18px;
+  left: -40px;
+  margin-bottom: 20px;
+  color: var(--champagne);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+}
 .hero-title-line-1,
 .hero-title-line-2 { display: block; }
 .hero-sub {
@@ -932,7 +939,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: behindFade 9s infinite;
+  animation: behindFade 9s ease-in-out infinite;
   transform-origin: 50% 60%;
   filter: drop-shadow(0 22px 60px rgba(0,0,0,0.55));
 }
@@ -953,12 +960,95 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 #behind .v-slide:nth-child(3) .photo { background-image: none; }
 #behind .v-slider .photo::after { display: none; }
 
+/* «Мысль» над каруселью: вне слайдов — не гаснет с opacity кадров */
+#behind .v-slider > .thought-bubble-behind {
+  position: absolute;
+  z-index: 4;
+  top: calc(8% + 40px);
+  right: calc(6% + 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  max-width: min(74%, 320px);
+  will-change: transform;
+  animation: thoughtBubbleFloat 10s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__text {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 3.2vw, 1.85rem);
+  line-height: 1.18;
+  letter-spacing: 0.03em;
+  color: #1a1522;
+  text-align: center;
+  padding: 0.85em 1.15em 0.95em;
+  background: rgba(255, 250, 245, 0.93);
+  border: 1px solid rgba(201, 160, 96, 0.42);
+  border-radius: 58% 42% 50% 50% / 50% 48% 52% 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 8px 28px rgba(0, 0, 0, 0.22);
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__or {
+  font-weight: 300;
+  opacity: 0.9;
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  margin-top: 6px;
+  margin-right: 18%;
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span {
+  display: block;
+  border-radius: 50%;
+  background: rgba(255, 250, 245, 0.93);
+  border: 1px solid rgba(201, 160, 96, 0.32);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(1) {
+  width: 18px;
+  height: 18px;
+}
+#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(2) {
+  width: 12px;
+  height: 12px;
+  margin-right: -4px;
+}
+
+/* Плавная смена кадров без резких вспышек */
 @keyframes behindFade {
   0% { opacity: 0; }
-  8% { opacity: 1; }
-  33% { opacity: 1; }
-  41% { opacity: 0; }
+  11% { opacity: 1; }
+  31% { opacity: 1; }
+  42% { opacity: 0; }
   100% { opacity: 0; }
+}
+
+/* Облачко: вправо → вверх → влево → вниз → к центру */
+@keyframes thoughtBubbleFloat {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(18px, 0, 0); }
+  40% { transform: translate3d(18px, -16px, 0); }
+  60% { transform: translate3d(-16px, -16px, 0); }
+  80% { transform: translate3d(-16px, 14px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes thoughtBubbleFloatTight {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(8px, 0, 0); }
+  40% { transform: translate3d(8px, -8px, 0); }
+  60% { transform: translate3d(-7px, -8px, 0); }
+  80% { transform: translate3d(-7px, 7px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 /* ── CINEMATIC ── */
@@ -1206,10 +1296,18 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   clip-path: polygon(0 4vw, 100% 0, 100% 100%, 0 100%);
   padding-top: calc(clamp(80px,10vw,140px) + 4vw);
 }
-#minigame { display: none !important; }
 .game-header { text-align: center; margin-bottom: 12px; }
 .game-header h2 { color: var(--champagne); }
 .game-header p { margin-bottom: 0; }
+#minigame .game-header--playing {
+  margin-bottom: 0;
+  min-height: 0;
+}
+#minigame .game-header--playing > .label,
+#minigame .game-header--playing > h2,
+#minigame .game-header--playing > p {
+  display: none;
+}
 
 .game-progress {
   display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -1224,12 +1322,17 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .progress-dot.current { background: var(--rose); transform: scale(1.4); }
 .progress-label { font-size: 0.72rem; letter-spacing: 0.15em; color: var(--muted); }
 
-.game-stage { min-height: 400px; }
+.game-stage { min-height: 480px; }
+/* Одна колонка на всех ширинах: превью → вопрос → варианты → навигация */
 .game-layout {
   display: grid;
-  grid-template-columns: minmax(250px, 320px) 1fr;
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 20px;
   align-items: start;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .game-avatar-panel {
   background: var(--glass);
@@ -1238,6 +1341,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   padding: 18px;
   backdrop-filter: blur(10px);
   overflow: hidden;
+  width: 100%;
 }
 .game-avatar-title {
   font-size: 0.7rem;
@@ -1249,14 +1353,17 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .dressup-preview {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  max-width: 360px;
+  margin-inline: auto;
+  aspect-ratio: 3 / 5;
+  min-height: 240px;
   border-radius: 14px;
   overflow: hidden;
   background: linear-gradient(180deg, #272233 0%, #1a1724 100%);
 }
 .dressup-preview-shell {
   display: grid;
-  grid-template-columns: minmax(84px, 1fr) minmax(130px, 160px) minmax(84px, 1fr);
+  grid-template-columns: minmax(40px, 56px) minmax(0, 1fr) minmax(40px, 56px);
   gap: 8px;
   align-items: center;
   width: 100%;
@@ -1270,7 +1377,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .dressup-selected-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
   padding: 5px;
   border: 1px solid var(--glass-border);
   border-radius: 8px;
@@ -1289,14 +1396,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 }
 .dressup-selected-thumb.no-image {
   background: linear-gradient(145deg, #2b2640, #1f1b2f);
-}
-.dressup-selected-label {
-  font-size: 0.56rem;
-  line-height: 1.2;
-  color: var(--muted);
-  min-width: 0;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 .dressup-layer {
   position: absolute;
@@ -1391,6 +1490,25 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .look-flower-lavender { background-image: url('assets/minigame/male_flower_lavender.png'); }
 .look-flower-gyps { background-image: url('assets/minigame/male_flower_gyps.png'); }
 .look-flower-peony { background-image: url('assets/minigame/male_flower_peony.png'); }
+
+/* Букет / бутоньерка поверх превью: выше, левее, наклон в другую сторону */
+#minigame .dressup-preview .dressup-bouquet {
+  position: absolute;
+  inset: unset;
+  top: auto;
+  right: auto;
+  left: -2%;
+  bottom: 40%;
+  width: 50%;
+  height: 52%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 28% 82%;
+  transform: rotate(11deg);
+  transform-origin: 38% 82%;
+  z-index: 4;
+  pointer-events: none;
+}
 .game-question { text-align: center; margin-bottom: 36px; }
 .game-question h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--champagne); margin-bottom: 8px; }
 
@@ -1400,6 +1518,10 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   gap: 16px;
   max-width: 960px;
   margin: 0 auto;
+}
+.game-options--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 520px;
 }
 @media(max-width:768px) { .game-options { grid-template-columns: repeat(2, 1fr); } }
 
@@ -1447,6 +1569,21 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   color: var(--champagne);
   margin-bottom: 24px;
   background: rgba(201,160,96,0.08);
+}
+.result-hero-wrap {
+  max-width: min(320px, 72vw);
+  margin: 0 auto 28px;
+}
+#minigame .game-result .dressup-preview--result {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  min-height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #272233 0%, #1a1724 100%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 .result-summary {
   display: grid;
@@ -1726,18 +1863,243 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
     margin: 0 auto;
     overflow: hidden;
   }
+  #behind .v-slider > .thought-bubble-behind {
+    top: calc(6% + 40px);
+    right: calc(4% + 80px);
+    max-width: min(82%, 280px);
+    animation: thoughtBubbleFloatTight 10s ease-in-out infinite;
+  }
   #behind {
     --behind-clip-x: 10vw;
     --behind-clip-y: 4.5vw;
   }
   .v-slide:nth-child(2), .v-slide:nth-child(3) { margin-left: 0; }
-  .game-layout { grid-template-columns: 1fr; }
-  .game-avatar-panel { max-width: 340px; margin: 0 auto; width: 100%; }
-  .dressup-preview-shell { grid-template-columns: 1fr; }
-  .dressup-side { flex-direction: row; flex-wrap: wrap; }
+  .game-layout { gap: 12px; max-width: min(640px, 100%); }
+  .game-stage { min-height: 0; }
+  .game-avatar-panel {
+    max-width: 100%;
+    margin: 0;
+    width: 100%;
+    padding: 12px;
+  }
+  .dressup-preview-shell {
+    gap: 6px;
+  }
+  .dressup-side {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .dressup-selected-item { padding: 3px; }
+  .dressup-selected-thumb {
+    width: 24px;
+    height: 24px;
+  }
+  .dressup-preview {
+    aspect-ratio: 3 / 5;
+    min-height: 0;
+    width: auto;
+    max-width: 100%;
+    height: min(38svh, 260px);
+    margin-inline: auto;
+  }
+  .game-progress { margin: 12px 0; gap: 8px; }
+  .progress-dot { width: 6px; height: 6px; }
+  #minigame .game-header { margin-bottom: 8px; }
+  #minigame .game-header h2 { font-size: clamp(1.4rem, 4.8vw, 1.95rem); }
+  .game-question { margin-bottom: 12px; }
+  .game-question h3 {
+    font-size: clamp(1.05rem, 3.4vw, 1.3rem);
+    margin-bottom: 4px;
+  }
+  .game-option .photo { height: clamp(70px, 18vw, 112px); }
+  .game-option { padding-bottom: 8px; }
+  .game-option-label { font-size: 0.68rem; margin-top: 6px; }
+  .game-nav { margin-top: 12px; gap: 10px; }
+  .game-avatar-title { font-size: 0.62rem; margin-bottom: 6px; }
+  #minigame {
+    padding: clamp(28px, 5vw, 64px) 0;
+    clip-path: polygon(0 2vw, 100% 0, 100% 100%, 0 100%);
+    padding-top: calc(clamp(28px, 5vw, 64px) + 2vw);
+  }
   /* Allow rotated/translated carousel photos to extend */
   #behind {
     clip-path: none;
+  }
+}
+
+/* Мини-игра: один экран на планшете и телефоне (шаги и экран результата) */
+@media (max-width: 1024px) {
+  #minigame.minigame--playing {
+    padding-top: max(6px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+    padding-left: 0;
+    padding-right: 0;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  #minigame.minigame--playing .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-left: clamp(10px, 2.8vw, 20px);
+    padding-right: clamp(10px, 2.8vw, 20px);
+  }
+
+  #minigame.minigame--playing .game-progress {
+    margin: 4px 0 6px;
+    flex-shrink: 0;
+  }
+
+  #minigame.minigame--playing .game-stage {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #minigame.minigame--playing .game-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: 6px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #minigame.minigame--playing .game-avatar-panel {
+    flex: 0 1 auto;
+    max-height: min(56svh, 420px);
+    min-height: 0;
+    padding: 6px 8px;
+    overflow: hidden;
+  }
+
+  #minigame.minigame--playing .dressup-preview {
+    height: min(48svh, 320px);
+  }
+
+  #minigame.minigame--playing .game-controls {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #minigame.minigame--playing .game-question {
+    flex-shrink: 0;
+    margin-bottom: 8px;
+  }
+
+  #minigame.minigame--playing .game-options {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    align-content: start;
+    align-items: start;
+    grid-auto-rows: min-content;
+    gap: 8px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  #minigame.minigame--playing .game-option {
+    padding-bottom: 4px;
+  }
+
+  #minigame.minigame--playing .game-option-label {
+    margin-top: 6px;
+  }
+
+  #minigame.minigame--playing .game-option .photo {
+    height: clamp(52px, 14vw, 84px);
+  }
+
+  #minigame.minigame--playing .game-nav {
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  #minigame.minigame--result {
+    padding-top: max(12px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    min-height: 100svh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #minigame.minigame--result .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  #minigame.minigame--result .game-progress,
+  #minigame.minigame--result .game-header {
+    display: none;
+  }
+
+  #minigame.minigame--result .game-result.show {
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 12px;
+    min-height: 0;
+  }
+
+  #minigame.minigame--result .result-badge {
+    font-size: clamp(1.15rem, 5vw, 1.85rem);
+    padding: 10px 18px;
+    margin-bottom: 12px;
+  }
+
+  #minigame.minigame--result .result-hero-wrap {
+    max-width: min(260px, 55vw);
+    margin-bottom: 12px;
+  }
+
+  #minigame.minigame--result .dressup-preview--result {
+    min-height: 0;
+    height: min(42svh, 280px);
+  }
+
+  #minigame.minigame--result #g-restart {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  #minigame .game-header h2 {
+    font-size: 1.32rem;
+  }
+  .dressup-preview {
+    height: min(32svh, 220px);
+  }
+  #minigame.minigame--playing .dressup-preview {
+    height: min(40svh, 260px);
+  }
+  #minigame.minigame--playing .game-option .photo {
+    height: clamp(48px, 22vw, 76px);
+  }
+  .game-option .photo {
+    height: clamp(62px, 24vw, 96px);
   }
 }
 
@@ -1964,6 +2326,28 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   #behind .v-slide .photo {
     border-radius: 14px;
   }
+  #behind .v-slider > .thought-bubble-behind {
+    top: calc(5% + 40px);
+    right: calc(3% + 80px);
+    max-width: min(86%, 260px);
+    animation: thoughtBubbleFloatTight 10s ease-in-out infinite;
+  }
+  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__text {
+    font-size: clamp(0.95rem, 4.5vw, 1.28rem);
+    padding: 0.68em 0.88em 0.78em;
+  }
+  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail {
+    margin-right: 12%;
+    gap: 6px;
+  }
+  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(1) {
+    width: 15px;
+    height: 15px;
+  }
+  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(2) {
+    width: 10px;
+    height: 10px;
+  }
   #org-note {
     background-image: none;
     background-position: center;
@@ -2012,6 +2396,10 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
       rgba(14, 12, 18, 0.72) 45%,
       rgba(14, 12, 18, 0.86) 100%
     );
+  }
+  #hero .hero-title {
+    top: 12px;
+    left: -12px;
   }
   .hero-title-line-1 {
     white-space: normal;
