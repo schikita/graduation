@@ -1554,6 +1554,330 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 
 .game-nav { display: flex; justify-content: center; gap: 16px; margin-top: 40px; }
 
+/* Десктоп: мини-игра в один экран (компактные отступы и превью) */
+@media (min-width: 1025px) {
+  #minigame {
+    padding: 20px 0 24px;
+    clip-path: polygon(0 1vw, 100% 0, 100% 100%, 0 100%);
+    padding-top: calc(20px + 1vw);
+  }
+
+  #minigame .game-header {
+    margin-bottom: 4px;
+  }
+
+  #minigame .game-header h2 {
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    line-height: 1.12;
+    margin: 0;
+  }
+
+  #minigame .game-header p {
+    font-size: 0.82rem;
+    margin-top: 4px;
+  }
+
+  #minigame .game-progress {
+    margin: 8px 0 10px;
+    gap: 8px;
+  }
+
+  #minigame .progress-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  #minigame .game-stage {
+    min-height: 0;
+    width: 100%;
+  }
+
+  /* Слева превью, справа вопрос + сетка 4×1 (четыре колонки) + кнопки */
+  #minigame .game-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+    gap: 12px 24px;
+    align-items: start;
+    justify-items: stretch;
+    max-width: min(1120px, 100%);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #minigame .game-avatar-panel {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 100%;
+    max-width: 300px;
+    padding: 8px 10px;
+    border-radius: calc(var(--r) - 2px);
+  }
+
+  #minigame .game-controls {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #minigame .game-avatar-title {
+    font-size: 0.6rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.12em;
+  }
+
+  #minigame .dressup-preview-shell {
+    gap: 6px;
+    grid-template-columns: minmax(32px, 44px) minmax(0, 1fr) minmax(32px, 44px);
+  }
+
+  #minigame .dressup-selected-thumb {
+    width: 22px;
+    height: 22px;
+  }
+
+  #minigame .dressup-selected-item {
+    padding: 3px;
+  }
+
+  #minigame .dressup-preview {
+    max-width: 100%;
+    min-height: 0;
+    height: min(42vh, 320px);
+    width: auto;
+    max-height: min(42vh, 320px);
+    border-radius: 10px;
+  }
+
+  #minigame .game-question {
+    margin-bottom: 8px;
+    text-align: left;
+  }
+
+  #minigame .game-question h3 {
+    font-size: 1.05rem;
+    margin-bottom: 2px;
+  }
+
+  #minigame .game-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    max-width: min(420px, 100%);
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Два варианта (аксессуары) — одна строка, уже по ширине */
+  #minigame .game-options.game-options--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(360px, 100%);
+  }
+
+  #minigame .game-option .photo {
+    height: 72px;
+  }
+
+  #minigame .game-option {
+    padding-bottom: 6px;
+    border-radius: calc(var(--r) - 2px);
+  }
+
+  #minigame .game-option-label {
+    font-size: 0.68rem;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+
+  #minigame .game-nav {
+    justify-content: flex-start;
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  /* Шаги без шапки — та же сетка «превью слева / варианты справа» */
+  #minigame.minigame--playing {
+    min-height: min(100vh, 100dvh);
+    max-height: min(100vh, 100dvh);
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #minigame.minigame--playing .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  #minigame.minigame--playing .game-progress {
+    margin: 4px 0;
+    flex-shrink: 0;
+  }
+
+  #minigame.minigame--playing .game-stage {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #minigame.minigame--playing .game-layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+    min-height: 0;
+    gap: 10px 20px;
+    overflow: hidden;
+    width: 100%;
+    max-width: min(1120px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+    align-items: start;
+  }
+
+  #minigame.minigame--playing .game-avatar-panel {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 100%;
+    max-width: 280px;
+    max-height: min(62vh, 520px);
+    min-height: 0;
+    padding: 6px 8px;
+    overflow: hidden;
+  }
+
+  #minigame.minigame--playing .dressup-preview {
+    height: min(52vh, 380px);
+    max-height: min(52vh, 380px);
+    max-width: 100%;
+  }
+
+  #minigame.minigame--playing .game-controls {
+    grid-column: 2;
+    grid-row: 1;
+    flex: unset;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #minigame.minigame--playing .game-question {
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
+  #minigame.minigame--playing .game-options {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    align-content: start;
+    align-items: start;
+    grid-auto-rows: min-content;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(420px, 100%);
+    width: 100%;
+  }
+
+  #minigame.minigame--playing .game-options.game-options--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(360px, 100%);
+  }
+
+  #minigame.minigame--playing .game-option {
+    padding-bottom: 4px;
+  }
+
+  #minigame.minigame--playing .game-option-label {
+    margin-top: 4px;
+  }
+
+  #minigame.minigame--playing .game-nav {
+    flex-shrink: 0;
+    margin-top: 6px;
+    justify-content: flex-start;
+  }
+
+  #minigame.minigame--result {
+    min-height: min(100vh, 100dvh);
+    max-height: min(100vh, 100dvh);
+    padding: max(12px, env(safe-area-inset-top, 0px)) 0 max(12px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #minigame.minigame--result .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  #minigame.minigame--result .game-progress,
+  #minigame.minigame--result .game-header {
+    display: none;
+  }
+
+  #minigame.minigame--result .game-result.show {
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    min-height: 0;
+  }
+
+  #minigame.minigame--result .result-badge {
+    font-size: clamp(1.1rem, 2vw, 1.65rem);
+    padding: 8px 20px;
+    margin-bottom: 10px;
+  }
+
+  #minigame.minigame--result .result-hero-wrap {
+    max-width: min(440px, 90vw);
+    margin-bottom: 12px;
+  }
+
+  #minigame.minigame--result .dressup-preview--result {
+    width: auto;
+    max-width: min(440px, 92vw);
+    height: min(58vh, 600px);
+    aspect-ratio: 3 / 5;
+    margin-inline: auto;
+  }
+
+  #minigame.minigame--result #g-restart {
+    margin-top: 8px;
+  }
+}
+
 .game-result {
   display: none; text-align: center; padding: 60px 20px;
   animation: fadeIn 0.6s ease;
@@ -1571,17 +1895,18 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background: rgba(201,160,96,0.08);
 }
 .result-hero-wrap {
-  max-width: min(320px, 72vw);
+  max-width: min(420px, 92vw);
   margin: 0 auto 28px;
 }
 #minigame .game-result .dressup-preview--result {
   position: relative;
-  width: 100%;
+  width: auto;
+  max-width: min(400px, 92vw);
+  height: min(50vh, 520px);
   aspect-ratio: 3 / 5;
-  min-height: 260px;
+  margin-inline: auto;
   border-radius: 16px;
   overflow: hidden;
-  margin: 0 auto;
   background: linear-gradient(180deg, #272233 0%, #1a1724 100%);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
@@ -2071,13 +2396,17 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   }
 
   #minigame.minigame--result .result-hero-wrap {
-    max-width: min(260px, 55vw);
+    max-width: min(380px, 88vw);
     margin-bottom: 12px;
   }
 
   #minigame.minigame--result .dressup-preview--result {
+    width: auto;
     min-height: 0;
-    height: min(42svh, 280px);
+    max-width: min(400px, 92vw);
+    height: min(52svh, 480px);
+    aspect-ratio: 3 / 5;
+    margin-inline: auto;
   }
 
   #minigame.minigame--result #g-restart {
