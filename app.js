@@ -21,10 +21,54 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateNavState);
   updateNavState();
 
-  /* ── LAZY LOAD (img[data-defer-src] + inline background-image) ── */
-  // Load only when the element actually enters the viewport.
-  const lazyRootMargin = '0px';
-  const lazyObserver = new IntersectionObserver((entries, obs) => {
+  /* ── LAZY LOAD (viewport / IntersectionObserver) ── */
+  function cssBackgroundUrlValue(src) {
+    const v = String(src || '').trim();
+    if (!v) return '';
+    if (/^url\s*\(/i.test(v)) return v;
+    const u = v.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    return `url('${u}')`;
+  }
+
+  /** Escape path for url('…') inside background / image-set */
+  function escapeBgPathForUrl(src) {
+    return String(src || '').trim().replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  }
+
+  /** Prefer WebP, fall back to JPEG (same dimensions), one network request where supported */
+  function cssBackgroundImageWebpWithJpegFallback(webpPath, jpegPath) {
+    const w = escapeBgPathForUrl(webpPath);
+    const j = escapeBgPathForUrl(jpegPath);
+    if (!w || !j) return cssBackgroundUrlValue(webpPath || jpegPath);
+    return `image-set(url('${w}') type('image/webp'), url('${j}') type('image/jpeg'))`;
+  }
+
+  const lazyObserverOptions = { root: null, rootMargin: '0px', threshold: 0.01 };
+  let lazyObserver;
+
+  function bindLazyInRoot(root = document) {
+    if (!lazyObserver || !root) return;
+    root.querySelectorAll('img[data-defer-src], iframe[data-defer-src], video[data-defer-src]').forEach((el) => {
+      if (el.matches && el.matches('img[data-load-with-menu]')) return;
+      lazyObserver.observe(el);
+    });
+    root.querySelectorAll('[data-lazy-bg], [data-lazy-bg-mobile]').forEach((el) => {
+      lazyObserver.observe(el);
+    });
+    root.querySelectorAll('[data-bg-defer]').forEach((el) => {
+      lazyObserver.observe(el);
+    });
+    root.querySelectorAll('[style*="background-image"]').forEach((el) => {
+      const bg = el.style.backgroundImage;
+      if (bg && bg !== 'none' && bg.includes('url')) {
+        el.dataset.bgDefer = bg;
+        el.style.backgroundImage = 'none';
+      }
+      lazyObserver.observe(el);
+    });
+  }
+
+  lazyObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
@@ -40,9 +84,23 @@ document.addEventListener('DOMContentLoaded', () => {
         el.removeAttribute('data-defer-src');
       }
 
-      const bgDefer = el.dataset && el.dataset.bgDefer;
-      if (bgDefer) {
-        el.style.backgroundImage = bgDefer;
+      const bgDeferRaw =
+        el.getAttribute('data-bg-defer') || (el.dataset && el.dataset.bgDefer);
+      if (bgDeferRaw) {
+        const bgDeferFallback =
+          el.getAttribute('data-bg-defer-fallback') ||
+          (el.dataset && el.dataset.bgDeferFallback);
+        if (bgDeferFallback) {
+          el.style.backgroundImage = cssBackgroundImageWebpWithJpegFallback(
+            bgDeferRaw,
+            bgDeferFallback
+          );
+          el.removeAttribute('data-bg-defer-fallback');
+          delete el.dataset.bgDeferFallback;
+        } else {
+          el.style.backgroundImage = cssBackgroundUrlValue(bgDeferRaw);
+        }
+        el.removeAttribute('data-bg-defer');
         delete el.dataset.bgDefer;
       }
 
@@ -52,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const useUrl =
           (window.innerWidth <= 768 && lazyBgMobile) ? lazyBgMobile : lazyBgDesktop;
         if (useUrl) {
-          el.style.backgroundImage = `url('${useUrl}')`;
+          el.style.backgroundImage = cssBackgroundUrlValue(useUrl);
         }
         delete el.dataset.lazyBg;
         delete el.dataset.lazyBgMobile;
@@ -60,33 +118,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
       obs.unobserve(el);
     });
-  }, { root: null, rootMargin: lazyRootMargin, threshold: 0.01 });
+  }, lazyObserverOptions);
 
-  // 1) Regular images (projects, logo if converted later, etc.)
-  document.querySelectorAll('img[data-defer-src], iframe[data-defer-src], video[data-defer-src]').forEach((el) => {
-    lazyObserver.observe(el);
-  });
+  bindLazyInRoot(document);
 
-  // 2) Inline background-image (url(...) only) - move it from style -> data-bgDefer
-  // This prevents browser from fetching all inline background images up-front.
-  document.querySelectorAll('[style*="background-image"]').forEach((el) => {
-    const bg = el.style.backgroundImage;
-    if (bg && bg !== 'none' && bg.includes('url')) {
-      el.dataset.bgDefer = bg;
-      el.style.backgroundImage = 'none';
-    }
-    lazyObserver.observe(el);
-  });
-
-  // 2.5) Elements that already have background in data-bg-defer (e.g. karpenko peek)
-  document.querySelectorAll('[data-bg-defer]').forEach((el) => {
-    if (el.dataset && el.dataset.bgDefer) lazyObserver.observe(el);
-  });
-
-  // 3) Background-image lazily by data attributes (sections backgrounds)
-  document
-    .querySelectorAll('[data-lazy-bg], [data-lazy-bg-mobile], [data-bg-defer]')
-    .forEach((el) => lazyObserver.observe(el));
+  /* Мини-игра: отдельный stylesheet с PNG-слоями — только у границы viewport */
+  const minigameSec = document.getElementById('minigame');
+  if (minigameSec) {
+    const ioMinigameCss = new IntersectionObserver((entries, o) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        if (document.getElementById('minigame-layers-css')) {
+          o.disconnect();
+          return;
+        }
+        const link = document.createElement('link');
+        link.id = 'minigame-layers-css';
+        link.rel = 'stylesheet';
+        link.href = 'minigame-layers.css';
+        document.head.appendChild(link);
+        o.disconnect();
+      });
+    }, { rootMargin: '100px 0px', threshold: 0.01 });
+    ioMinigameCss.observe(minigameSec);
+  }
 
   /* ── BURGER MENU ── */
   const burger = document.querySelector('.burger');
@@ -97,6 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const isOpen = mobileMenu.classList.contains('open');
     document.body.classList.toggle('mobile-menu-open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen && lazyObserver) {
+      mobileMenu.querySelectorAll('img[data-defer-src][data-load-with-menu]').forEach((img) => {
+        lazyObserver.observe(img);
+      });
+    }
   });
   document.querySelectorAll('.mobile-menu a').forEach(a => {
     a.addEventListener('click', () => {
@@ -560,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
           transformedImage = `assets/minigame/female_outfut_done/female_output_${dressNum}.png`;
         }
         const bouquet = getBouquetLayerMarkup();
-        return `<div class="dressup-layer dressup-body transformed" style="background-image:url('${transformedImage}')"></div>${bouquet}`;
+        return `<div class="dressup-layer dressup-body transformed" data-bg-defer="${String(transformedImage).replace(/"/g, '&quot;')}"></div>${bouquet}`;
       }
     }
     const bouquet = getBouquetLayerMarkup();
@@ -576,7 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const opt = step.options[selections[step.key]];
         cards.push(`
           <div class="dressup-selected-item">
-            <div class="dressup-selected-thumb${opt.previewImage ? '' : ' no-image'}" ${opt.previewImage ? `style="background-image:url('${opt.previewImage}');"` : ''}></div>
+            <div class="dressup-selected-thumb${opt.previewImage ? '' : ' no-image'}" ${opt.previewImage ? `data-bg-defer="${String(opt.previewImage).replace(/"/g, '&quot;')}"` : ''}></div>
           </div>
         `);
       }
@@ -622,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="game-options${optionRows.length === 2 ? ' game-options--pair' : ''}">
               ${optionRows.map(({ opt, idx }) => `
                 <div class="game-option ${selections[step.key] === idx ? 'selected' : ''}" data-step-key="${step.key}" data-idx="${idx}">
-                  <div class="photo ${opt.cls}" data-label="${opt.previewImage ? '' : opt.label}" ${opt.previewImage ? `style="background-image:url('${opt.previewImage}');background-size:contain;background-position:center;background-repeat:no-repeat;"` : ''}></div>
+                  <div class="photo ${opt.cls}" data-label="${opt.previewImage ? '' : opt.label}" ${opt.previewImage ? `data-bg-defer="${String(opt.previewImage).replace(/"/g, '&quot;')}"` : ''}></div>
                   <div class="game-option-label">${opt.label}</div>
                   <div class="game-option-check">✓</div>
                 </div>
@@ -635,6 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
+      bindLazyInRoot(gameStage);
       gameStage.style.opacity = 1;
       gameStage.style.transition = 'opacity 0.4s';
 
@@ -700,6 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (resultHeroWrap) {
       resultHeroWrap.innerHTML = `<div class="dressup-preview dressup-preview--result">${getCharacterMarkup()}</div>`;
+      bindLazyInRoot(resultHeroWrap);
     }
     if (resultHint) resultHint.style.display = 'none';
     if (resultSummaryEl) {

@@ -409,6 +409,17 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   transition: transform 0.5s ease;
 }
 .collage-item:hover { transform: scale(1.03) rotate(0deg) !important; z-index: 5; }
+.collage-item[data-bg-defer] {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Коллаж intro: целиком вписать кадр без обрезки (без [data-bg-defer]: атрибут снимается после lazy-load) */
+.intro-collage .collage-item {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .ci-1 { width: 55%; height: 65%; top: 0; right: 0; border-radius: 20px 20px 60px 20px; }
 .ci-2 { width: 48%; height: 52%; bottom: 0; left: 0; border-radius: 60px 20px 20px 20px; transform: rotate(-2deg); }
 .ci-3 { width: 36%; height: 38%; top: 30%; left: 10%; border-radius: 50% 20px 20px 50%; transform: rotate(1.5deg); box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
@@ -540,7 +551,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 /* ── PORTRAITS ── */
 #portraits {
   padding: clamp(80px,10vw,160px) 0;
-  background-image: url('assets/img/galery-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -578,6 +588,11 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .portrait-card:nth-child(4) { grid-column: span 2; }
 .portrait-card .photo { width: 100%; height: 100%; min-height: 280px; }
 .portrait-card .photo {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.portrait-card .photo[data-bg-defer] {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -770,17 +785,14 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .karpenko-peek-photo.kp-1 {
   left: 13%;
   transform: translateY(-90%) rotate(-15deg);
-  background-image: url('assets/photo/2-1.jpg');
 }
 .karpenko-peek-photo.kp-2 {
   left: 40%;
   transform: translateY(-90%) rotate(15deg);
-  background-image: url('assets/photo/2-2.jpg');
 }
 .karpenko-peek-photo.kp-3 {
   left: 67%;
   transform: translateY(-90%) rotate(-10deg);
-  background-image: url('assets/photo/2-3.jpg');
 }
 
 /* ── MEN LOOK ── */
@@ -819,9 +831,34 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 }
 
 /* ── DRESS SALONS ── */
-#dress-salons {
+#dress-salons.dress-salons-section {
+  position: relative;
   padding: clamp(70px, 9vw, 140px) 0;
   background: linear-gradient(160deg, #13111e 0%, #0e0c12 100%);
+  overflow: hidden;
+}
+.dress-salons-photo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.dress-salons-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    160deg,
+    rgba(19, 17, 30, 0.78) 0%,
+    rgba(14, 12, 18, 0.84) 100%
+  );
+}
+.dress-salons-container {
+  position: relative;
+  z-index: 2;
 }
 .dress-salons-layout {
   display: grid;
@@ -955,73 +992,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-repeat: no-repeat;
 }
 
-#behind .v-slide:nth-child(1) .photo { background-image: none; }
-#behind .v-slide:nth-child(2) .photo { background-image: none; }
-#behind .v-slide:nth-child(3) .photo { background-image: none; }
 #behind .v-slider .photo::after { display: none; }
-
-/* «Мысль» над каруселью: вне слайдов — не гаснет с opacity кадров */
-#behind .v-slider > .thought-bubble-behind {
-  position: absolute;
-  z-index: 4;
-  top: calc(8% + 40px);
-  right: calc(6% + 80px);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: none;
-  max-width: min(74%, 320px);
-  will-change: transform;
-  animation: thoughtBubbleFloat 10s ease-in-out infinite;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__text {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.05rem, 3.2vw, 1.85rem);
-  line-height: 1.18;
-  letter-spacing: 0.03em;
-  color: #1a1522;
-  text-align: center;
-  padding: 0.85em 1.15em 0.95em;
-  background: rgba(255, 250, 245, 0.93);
-  border: 1px solid rgba(201, 160, 96, 0.42);
-  border-radius: 58% 42% 50% 50% / 50% 48% 52% 50%;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    0 8px 28px rgba(0, 0, 0, 0.22);
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__or {
-  font-weight: 300;
-  opacity: 0.9;
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 7px;
-  margin-top: 6px;
-  margin-right: 18%;
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span {
-  display: block;
-  border-radius: 50%;
-  background: rgba(255, 250, 245, 0.93);
-  border: 1px solid rgba(201, 160, 96, 0.32);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(1) {
-  width: 18px;
-  height: 18px;
-}
-#behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(2) {
-  width: 12px;
-  height: 12px;
-  margin-right: -4px;
-}
 
 /* Плавная смена кадров без резких вспышек */
 @keyframes behindFade {
@@ -1030,25 +1001,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   31% { opacity: 1; }
   42% { opacity: 0; }
   100% { opacity: 0; }
-}
-
-/* Облачко: вправо → вверх → влево → вниз → к центру */
-@keyframes thoughtBubbleFloat {
-  0% { transform: translate3d(0, 0, 0); }
-  20% { transform: translate3d(18px, 0, 0); }
-  40% { transform: translate3d(18px, -16px, 0); }
-  60% { transform: translate3d(-16px, -16px, 0); }
-  80% { transform: translate3d(-16px, 14px, 0); }
-  100% { transform: translate3d(0, 0, 0); }
-}
-
-@keyframes thoughtBubbleFloatTight {
-  0% { transform: translate3d(0, 0, 0); }
-  20% { transform: translate3d(8px, 0, 0); }
-  40% { transform: translate3d(8px, -8px, 0); }
-  60% { transform: translate3d(-7px, -8px, 0); }
-  80% { transform: translate3d(-7px, 7px, 0); }
-  100% { transform: translate3d(0, 0, 0); }
 }
 
 /* ── CINEMATIC ── */
@@ -1417,18 +1369,14 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
+  background-image: none;
 }
 .dressup-body.transformed {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
 }
-.dressup-body.female {
-  background-image: url('assets/minigame/base_female.png');
-}
-.dressup-body.male {
-  background-image: url('assets/minigame/base_male.png');
-}
+/* url(...) слоёв мини-игры — в minigame-layers.css, подключается из app.js у #minigame */
 .look-outfit-dress, .look-outfit-pantsuit, .look-outfit-boho, .look-outfit-classic,
 .look-outfit-black, .look-outfit-blue, .look-outfit-light, .look-outfit-tux,
 .look-shoes-heels, .look-shoes-ballet, .look-shoes-sandals, .look-shoes-loafers,
@@ -1444,52 +1392,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   background-size: contain;
   pointer-events: none;
 }
-
-.look-outfit-dress { background-image: url('assets/minigame/female_outfit_dress.png'); }
-.look-outfit-pantsuit { background-image: url('assets/minigame/female_outfit_pantsuit.png'); }
-.look-outfit-boho { background-image: url('assets/minigame/female_outfit_boho.png'); }
-.look-outfit-classic { background-image: url('assets/minigame/female_outfit_classic.png'); }
-
-.look-outfit-black { background-image: url('assets/minigame/male_outfit_black.png'); }
-.look-outfit-blue { background-image: url('assets/minigame/male_outfit_blue.png'); }
-.look-outfit-light { background-image: url('assets/minigame/male_outfit_light.png'); }
-.look-outfit-tux { background-image: url('assets/minigame/male_outfit_tux.png'); }
-
-.look-shoes-heels { background-image: url('assets/minigame/female_shoes_heels.png'); }
-.look-shoes-ballet { background-image: url('assets/minigame/female_shoes_ballet.png'); }
-.look-shoes-sandals { background-image: url('assets/minigame/female_shoes_sandals.png'); }
-.look-shoes-loafers { background-image: url('assets/minigame/female_shoes_loafers.png'); }
-.look-shoes-loafers-male { background-image: url('assets/minigame/male_shoes_loafers.png'); }
-.look-shoes-oxford { background-image: url('assets/minigame/male_shoes_oxford.png'); }
-.look-shoes-monks { background-image: url('assets/minigame/male_shoes_monks.png'); }
-.look-shoes-derby { background-image: url('assets/minigame/male_shoes_derby.png'); }
-
-.look-accessory-pearls { background-image: url('assets/minigame/female_accessory_pearls.png'); }
-.look-accessory-earrings { background-image: url('assets/minigame/female_accessory_earrings.png'); }
-.look-accessory-clutch { background-image: url('assets/minigame/female_accessory_clutch.png'); }
-.look-accessory-wreath { background-image: url('assets/minigame/female_accessory_wreath.png'); }
-.look-accessory-tie { background-image: url('assets/minigame/male_accessory_tie.png'); }
-.look-accessory-bow { background-image: url('assets/minigame/male_accessory_bow.png'); }
-.look-accessory-suspenders { background-image: url('assets/minigame/male_accessory_suspenders.png'); }
-.look-accessory-pocket { background-image: url('assets/minigame/male_accessory_pocket.png'); }
-
-.look-hair-updo { background-image: url('assets/minigame/female_hair_updo.png'); }
-.look-hair-curls { background-image: url('assets/minigame/female_hair_curls.png'); }
-.look-hair-straight { background-image: url('assets/minigame/female_hair_straight.png'); }
-.look-hair-braid { background-image: url('assets/minigame/female_hair_braid.png'); }
-.look-hair-part { background-image: url('assets/minigame/male_hair_part.png'); }
-.look-hair-texture { background-image: url('assets/minigame/male_hair_texture.png'); }
-.look-hair-back { background-image: url('assets/minigame/male_hair_back.png'); }
-.look-hair-fade { background-image: url('assets/minigame/male_hair_fade.png'); }
-
-.look-flowers-roses { background-image: url('assets/minigame/female_flowers_roses.png'); }
-.look-flowers-peonies { background-image: url('assets/minigame/female_flowers_peonies.png'); }
-.look-flowers-field { background-image: url('assets/minigame/female_flowers_field.png'); }
-.look-flowers-lilies { background-image: url('assets/minigame/female_flowers_lilies.png'); }
-.look-flower-rose { background-image: url('assets/minigame/male_flower_rose.png'); }
-.look-flower-lavender { background-image: url('assets/minigame/male_flower_lavender.png'); }
-.look-flower-gyps { background-image: url('assets/minigame/male_flower_gyps.png'); }
-.look-flower-peony { background-image: url('assets/minigame/male_flower_peony.png'); }
 
 /* Букет / бутоньерка поверх превью: выше, левее, наклон в другую сторону */
 #minigame .dressup-preview .dressup-bouquet {
@@ -1540,6 +1442,12 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .game-option:hover { transform: translateY(-6px); border-color: rgba(201,160,96,0.4); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
 .game-option.selected { border-color: var(--gold); background: rgba(201,160,96,0.12); box-shadow: 0 0 20px rgba(201,160,96,0.2); }
 .game-option .photo { width: 100%; height: 140px; }
+/* Без [data-bg-defer]: атрибут снимается после lazy-load — иначе снова cover/обрезка */
+#minigame .game-option .photo {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .game-option-label { font-size: 0.78rem; letter-spacing: 0.05em; color: var(--champagne); margin-top: 12px; }
 .game-option-check {
   position: absolute; top: 10px; right: 10px;
@@ -1965,6 +1873,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .projects-section__bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background-image: none;
   background-size: cover;
   background-position: center top;
@@ -1974,16 +1883,17 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
 .projects-section__overlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(14, 12, 18, 0.78) 0%,
-      rgba(14, 12, 18, 0.9) 100%
-    ),
-    url('assets/img/begin-bg.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+.projects-section__overlay-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 12, 18, 0.78) 0%,
+    rgba(14, 12, 18, 0.9) 100%
+  );
 }
 .projects-inner {
   position: relative;
@@ -2086,7 +1996,7 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 #contact-footer {
-  background-image: url('assets/img/footer.jpg');
+  position: relative;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2187,12 +2097,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
     width: min(88vw, 360px);
     margin: 0 auto;
     overflow: hidden;
-  }
-  #behind .v-slider > .thought-bubble-behind {
-    top: calc(6% + 40px);
-    right: calc(4% + 80px);
-    max-width: min(82%, 280px);
-    animation: thoughtBubbleFloatTight 10s ease-in-out infinite;
   }
   #behind {
     --behind-clip-x: 10vw;
@@ -2654,28 +2558,6 @@ nav.scrolled .nav-links a:hover { color: var(--champagne); }
   }
   #behind .v-slide .photo {
     border-radius: 14px;
-  }
-  #behind .v-slider > .thought-bubble-behind {
-    top: calc(5% + 40px);
-    right: calc(3% + 80px);
-    max-width: min(86%, 260px);
-    animation: thoughtBubbleFloatTight 10s ease-in-out infinite;
-  }
-  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__text {
-    font-size: clamp(0.95rem, 4.5vw, 1.28rem);
-    padding: 0.68em 0.88em 0.78em;
-  }
-  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail {
-    margin-right: 12%;
-    gap: 6px;
-  }
-  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(1) {
-    width: 15px;
-    height: 15px;
-  }
-  #behind .v-slider > .thought-bubble-behind .thought-bubble-behind__trail span:nth-child(2) {
-    width: 10px;
-    height: 10px;
   }
   #org-note {
     background-image: none;

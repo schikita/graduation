@@ -63,7 +63,6 @@
       >
         <img
           src="assets/logo.png"
-          data-defer-src="assets/logo.png"
           alt="SB.BY"
           class="logo-img"
           width="40"
@@ -85,10 +84,13 @@
     <!-- Mobile menu -->
     <div class="mobile-menu">
       <img
-        src="assets/splash.png"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E"
+        data-defer-src="assets/splash.png"
+        data-load-with-menu=""
         alt=""
         class="mobile-menu-splash"
         aria-hidden="true"
+        decoding="async"
       />
       <a href="#intro">Как готовится школа?</a>
       <a href="#behind">Как готовятся девочки?</a>
@@ -197,32 +199,17 @@
             <div
               class="collage-item ci-1 photo photo-rose"
               data-label=""
-              style="
-                background-image: url(&quot;assets/img/dance-1.png&quot;);
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-              "
+              data-bg-defer="assets/img/dance-1.png"
             ></div>
             <div
               class="collage-item ci-2 photo photo-warm"
               data-label=""
-              style="
-                background-image: url(&quot;assets/img/dance-4.jpg&quot;);
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-              "
+              data-bg-defer="assets/img/dance-4.jpg"
             ></div>
             <div
               class="collage-item ci-4 photo photo-violet"
               data-label=""
-              style="
-                background-image: url(&quot;assets/img/dance-3.jpg&quot;);
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-              "
+              data-bg-defer="assets/img/dance-3.jpg"
             ></div>
           </div>
         </div>
@@ -395,17 +382,6 @@
                 data-bg-defer="assets/photo/3.jpg"
               ></div>
             </div>
-            <aside
-              class="thought-bubble-behind"
-              aria-label="Мысль: миди или мини"
-            >
-              <p class="thought-bubble-behind__text">
-                Миди <span class="thought-bubble-behind__or">или</span> мини
-              </p>
-              <div class="thought-bubble-behind__trail" aria-hidden="true">
-                <span></span><span></span>
-              </div>
-            </aside>
           </div>
         </div>
       </div>
@@ -414,7 +390,11 @@
     <!-- ══════════════════════════════════════
      4. ОБРАЗЫ ВЫПУСКНИКОВ
 ══════════════════════════════════════ -->
-    <section id="portraits" class="section">
+    <section
+      id="portraits"
+      class="section"
+      data-lazy-bg="assets/img/galery-bg.jpg"
+    >
       <div class="container">
         <div class="portraits-header"></div>
 
@@ -422,7 +402,7 @@
           <div class="portrait-card reveal">
             <div
               class="photo"
-              style="background-image: url(&quot;assets/img/galery/1.jpg&quot;)"
+              data-bg-defer="assets/img/galery/1.jpg"
               data-label="Выпускница в вечернем платье"
             ></div>
             <div class="portrait-overlay">
@@ -433,7 +413,7 @@
           <div class="portrait-card reveal reveal-delay-1">
             <div
               class="photo"
-              style="background-image: url(&quot;assets/img/galery/2.jpg&quot;)"
+              data-bg-defer="assets/img/galery/2.jpg"
               data-label="Выпускник в костюме"
             ></div>
             <div class="portrait-overlay">
@@ -444,7 +424,7 @@
           <div class="portrait-card reveal reveal-delay-2">
             <div
               class="photo"
-              style="background-image: url(&quot;assets/img/galery/3.jpg&quot;)"
+              data-bg-defer="assets/img/galery/3.jpg"
               data-label="Подруги-выпускницы"
             ></div>
             <div class="portrait-overlay">
@@ -455,7 +435,7 @@
           <div class="portrait-card reveal reveal-delay-1">
             <div
               class="photo"
-              style="background-image: url(&quot;assets/img/galery/4.jpg&quot;)"
+              data-bg-defer="assets/img/galery/4.jpg"
               data-label="Выпускники — лучшие друзья"
             ></div>
             <div class="portrait-overlay">
@@ -528,20 +508,14 @@
       </div>
     </section>
 
-    <section
-      id="dress-salons"
-      class="section"
-      style="
-        background:
-          linear-gradient(
-            160deg,
-            rgba(19, 17, 30, 0.78) 0%,
-            rgba(14, 12, 18, 0.84) 100%
-          ),
-          url(&quot;assets/photo/salon-bg.jpg&quot;) center / cover no-repeat;
-      "
-    >
-      <div class="container">
+    <section id="dress-salons" class="section dress-salons-section">
+      <div
+        class="dress-salons-photo-bg"
+        data-lazy-bg="assets/photo/salon-bg.jpg"
+        aria-hidden="true"
+      ></div>
+      <div class="dress-salons-gradient" aria-hidden="true"></div>
+      <div class="container dress-salons-container">
         <div class="dress-salons-layout">
           <div
             class="salons-carousel reveal-left"
@@ -550,57 +524,48 @@
             <div class="salons-carousel-track">
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/1.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/1.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/1.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/2.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/2.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/2.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/3.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/3.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/3.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/4.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/4.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/4.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/5.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/5.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/5.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/6.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/6.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/6.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/7.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/7.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/7.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/8.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/8.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/8.jpg"
               ></div>
               <div
                 class="salons-photo"
-                style="
-                  background-image: url(&quot;assets/img/carousel-photo/9.jpg&quot;);
-                "
+                data-bg-defer="assets/img/carousel-photo/webp/9.webp"
+                data-bg-defer-fallback="assets/img/carousel-photo/9.jpg"
               ></div>
             </div>
           </div>
@@ -846,7 +811,9 @@
         aria-hidden="true"
         data-lazy-bg="assets/img/begin-bg.jpg"
       ></div>
-      <div class="projects-section__overlay"></div>
+      <div class="projects-section__overlay" aria-hidden="true">
+        <div class="projects-section__overlay-tint"></div>
+      </div>
       <div class="projects-inner">
         <div class="section-header centered">
           <h2 class="section-title">Живой репортаж — материалы</h2>
@@ -924,6 +891,7 @@
       class="section footer-section"
       id="contact-footer"
       data-section="16"
+      data-lazy-bg="assets/img/footer.jpg"
     >
       <footer class="site-footer" role="contentinfo">
         <div class="footer-content">

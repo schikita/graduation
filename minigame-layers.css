@@ -1,0 +1,53 @@
+/* Подключается только когда секция #minigame попадает в зону видимости — иначе превью-трекер не тянет десятки PNG из основного styles.css */
+.dressup-body.female {
+  background-image: url('assets/minigame/base_female.png');
+}
+.dressup-body.male {
+  background-image: url('assets/minigame/base_male.png');
+}
+
+.look-outfit-dress { background-image: url('assets/minigame/female_outfit_dress.png'); }
+.look-outfit-pantsuit { background-image: url('assets/minigame/female_outfit_pantsuit.png'); }
+.look-outfit-boho { background-image: url('assets/minigame/female_outfit_boho.png'); }
+.look-outfit-classic { background-image: url('assets/minigame/female_outfit_classic.png'); }
+
+.look-outfit-black { background-image: url('assets/minigame/male_outfit_black.png'); }
+.look-outfit-blue { background-image: url('assets/minigame/male_outfit_blue.png'); }
+.look-outfit-light { background-image: url('assets/minigame/male_outfit_light.png'); }
+.look-outfit-tux { background-image: url('assets/minigame/male_outfit_tux.png'); }
+
+.look-shoes-heels { background-image: url('assets/minigame/female_shoes_heels.png'); }
+.look-shoes-ballet { background-image: url('assets/minigame/female_shoes_ballet.png'); }
+.look-shoes-sandals { background-image: url('assets/minigame/female_shoes_sandals.png'); }
+.look-shoes-loafers { background-image: url('assets/minigame/female_shoes_loafers.png'); }
+.look-shoes-loafers-male { background-image: url('assets/minigame/male_shoes_loafers.png'); }
+.look-shoes-oxford { background-image: url('assets/minigame/male_shoes_oxford.png'); }
+.look-shoes-monks { background-image: url('assets/minigame/male_shoes_monks.png'); }
+.look-shoes-derby { background-image: url('assets/minigame/male_shoes_derby.png'); }
+
+.look-accessory-pearls { background-image: url('assets/minigame/female_accessory_pearls.png'); }
+.look-accessory-earrings { background-image: url('assets/minigame/female_accessory_earrings.png'); }
+.look-accessory-clutch { background-image: url('assets/minigame/female_accessory_clutch.png'); }
+.look-accessory-wreath { background-image: url('assets/minigame/female_accessory_wreath.png'); }
+.look-accessory-tie { background-image: url('assets/minigame/male_accessory_tie.png'); }
+.look-accessory-bow { background-image: url('assets/minigame/male_accessory_bow.png'); }
+.look-accessory-suspenders { background-image: url('assets/minigame/male_accessory_suspenders.png'); }
+.look-accessory-pocket { background-image: url('assets/minigame/male_accessory_pocket.png'); }
+
+.look-hair-updo { background-image: url('assets/minigame/female_hair_updo.png'); }
+.look-hair-curls { background-image: url('assets/minigame/female_hair_curls.png'); }
+.look-hair-straight { background-image: url('assets/minigame/female_hair_straight.png'); }
+.look-hair-braid { background-image: url('assets/minigame/female_hair_braid.png'); }
+.look-hair-part { background-image: url('assets/minigame/male_hair_part.png'); }
+.look-hair-texture { background-image: url('assets/minigame/male_hair_texture.png'); }
+.look-hair-back { background-image: url('assets/minigame/male_hair_back.png'); }
+.look-hair-fade { background-image: url('assets/minigame/male_hair_fade.png'); }
+
+.look-flowers-roses { background-image: url('assets/minigame/female_flowers_roses.png'); }
+.look-flowers-peonies { background-image: url('assets/minigame/female_flowers_peonies.png'); }
+.look-flowers-field { background-image: url('assets/minigame/female_flowers_field.png'); }
+.look-flowers-lilies { background-image: url('assets/minigame/female_flowers_lilies.png'); }
+.look-flower-rose { background-image: url('assets/minigame/male_flower_rose.png'); }
+.look-flower-lavender { background-image: url('assets/minigame/male_flower_lavender.png'); }
+.look-flower-gyps { background-image: url('assets/minigame/male_flower_gyps.png'); }
+.look-flower-peony { background-image: url('assets/minigame/male_flower_peony.png'); }
